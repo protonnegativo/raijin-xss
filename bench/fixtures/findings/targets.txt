@@ -1,0 +1,6 @@
+http://127.0.0.1:19301/search?q=a
+http://127.0.0.1:19301/profile?name=a
+http://127.0.0.1:19301/widget?cb=a
+http://127.0.0.1:19301/safe?q=a
+http://127.0.0.1:19301/report?id=1
+http://127.0.0.1:19301/api/echo?msg=a

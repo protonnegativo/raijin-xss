@@ -1,0 +1,3 @@
+http://app.example.com/search?q=a
+http://app.example.com/safe?q=a
+http://other.example.net/search?q=a

