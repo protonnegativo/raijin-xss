@@ -73,31 +73,33 @@ type Options struct {
 	RawPath string
 }
 
-// Run scans the targets and returns every PoC, plus the last stderr lines if dalfox failed.
-func Run(ctx context.Context, targets []string, opt Options) ([]PoC, string, error) {
+// Run scans the targets and returns every PoC, the format counts (see Format), plus the last stderr
+// lines if dalfox failed.
+func Run(ctx context.Context, targets []string, opt Options) ([]PoC, Format, string, error) {
+	var format Format
 	bin := opt.Binary
 	if bin == "" {
 		bin = "dalfox"
 	}
 	path, err := exec.LookPath(bin)
 	if err != nil {
-		return nil, "", ErrNotFound
+		return nil, format, "", ErrNotFound
 	}
 
 	list, err := os.CreateTemp("", "raijin-xss-targets-*.txt")
 	if err != nil {
-		return nil, "", err
+		return nil, format, "", err
 	}
 	defer os.Remove(list.Name())
 	if _, err := io.WriteString(list, strings.Join(targets, "\n")+"\n"); err != nil {
 		list.Close()
-		return nil, "", err
+		return nil, format, "", err
 	}
 	list.Close()
 
 	// dalfox appends to -o, so a file left by an earlier run is emptied first.
 	if err := os.WriteFile(opt.RawPath, nil, 0o644); err != nil {
-		return nil, "", err
+		return nil, format, "", err
 	}
 
 	// dalfox writes the same JSON to stdout and to -o; raijin-xss reads the file. Stdin stays nil
@@ -109,19 +111,19 @@ func Run(ctx context.Context, targets []string, opt Options) ([]PoC, string, err
 	f, err := os.Open(opt.RawPath)
 	if err != nil {
 		if waitErr != nil {
-			return nil, tail(stderr.String(), 3), fmt.Errorf("dalfox exited: %w", waitErr)
+			return nil, format, tail(stderr.String(), 3), fmt.Errorf("dalfox exited: %w", waitErr)
 		}
-		return nil, "", nil // no PoC: dalfox may not write the file at all
+		return nil, format, "", nil // no PoC: dalfox may not write the file at all
 	}
 	defer f.Close()
-	pocs, parseErr := Parse(f)
+	pocs, format, parseErr := ParseFormat(f)
 	if parseErr != nil {
-		return pocs, tail(stderr.String(), 3), parseErr
+		return pocs, format, tail(stderr.String(), 3), parseErr
 	}
 	if waitErr != nil {
-		return pocs, tail(stderr.String(), 3), fmt.Errorf("dalfox exited: %w", waitErr)
+		return pocs, format, tail(stderr.String(), 3), fmt.Errorf("dalfox exited: %w", waitErr)
 	}
-	return pocs, "", nil
+	return pocs, format, "", nil
 }
 
 // Args builds the dalfox command line: file mode, JSON written to RawPath, silent, no colors. It never
@@ -152,43 +154,64 @@ func Args(listFile string, opt Options) []string {
 	return append(args, opt.Extra...)
 }
 
+// Format counts the results Parse read and how many of them lacked the fields the reducer needs (type
+// and data) or were not JSON at all: a sign that dalfox's output format changed.
+type Format struct {
+	Results int
+	Bad     int
+}
+
 // Parse reads dalfox JSON: an array of PoCs, with an empty object dalfox adds at the end. JSON lines
-// (one PoC per line) are read too. Objects without a type are skipped.
+// (one PoC per line) are read too. Objects without a type or data are skipped.
 func Parse(r io.Reader) ([]PoC, error) {
+	pocs, _, err := ParseFormat(r)
+	return pocs, err
+}
+
+// ParseFormat is Parse, and also counts the results that were skipped (see Format).
+func ParseFormat(r io.Reader) ([]PoC, Format, error) {
+	var f Format
 	b, err := io.ReadAll(r)
 	if err != nil {
-		return nil, err
+		return nil, f, err
 	}
 	b = bytes.TrimSpace(b)
 	if len(b) == 0 {
-		return nil, nil
+		return nil, f, nil
 	}
 	var pocs []PoC
+	add := func(obj []byte) {
+		if string(bytes.Join(bytes.Fields(obj), nil)) == "{}" {
+			return // dalfox's closing empty object
+		}
+		f.Results++
+		var p PoC
+		if err := json.Unmarshal(obj, &p); err != nil || p.Type == "" || p.Data == "" {
+			f.Bad++
+			return
+		}
+		pocs = append(pocs, p)
+	}
 	if b[0] == '[' {
-		var all []PoC
+		var all []json.RawMessage
 		if err := json.Unmarshal(b, &all); err == nil {
-			for _, p := range all {
-				if p.Type != "" {
-					pocs = append(pocs, p)
-				}
+			for _, obj := range all {
+				add(obj)
 			}
-			return pocs, nil
+			return pocs, f, nil
 		}
 	}
 	sc := bufio.NewScanner(bytes.NewReader(b))
 	sc.Buffer(make([]byte, 0, 64*1024), 64*1024*1024)
 	for sc.Scan() {
 		line := bytes.TrimRight(bytes.TrimSpace(sc.Bytes()), ",")
-		if len(line) == 0 || line[0] != '{' {
+		line = bytes.TrimSpace(bytes.TrimLeft(bytes.TrimRight(line, "]"), "["))
+		if len(line) == 0 {
 			continue
 		}
-		var p PoC
-		if err := json.Unmarshal(line, &p); err != nil || p.Type == "" {
-			continue
-		}
-		pocs = append(pocs, p)
+		add(line) // a line that is not JSON counts as a bad result
 	}
-	return pocs, sc.Err()
+	return pocs, f, sc.Err()
 }
 
 func tail(s string, n int) string {

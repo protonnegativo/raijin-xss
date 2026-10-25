@@ -177,3 +177,26 @@ func TestScopeAloneTestsWhatTheScopeNames(t *testing.T) {
 		t.Errorf("next = %v", res.Next)
 	}
 }
+
+// dalfox output whose "type" field was renamed: the results are counted and engine_format says why.
+func TestEngineFormatRenamedField(t *testing.T) {
+	var out, errb bytes.Buffer
+	args := []string{"--scope", scopeFile(t), "--input", "../../testdata/renamed.json"}
+	if code := run(args, strings.NewReader(""), &out, &errb); code != 0 {
+		t.Fatalf("exit %d: %s", code, errb.String())
+	}
+	var res struct {
+		Omitted map[string]int
+		Errors  []struct{ Kind, Hint string }
+	}
+	if err := json.Unmarshal(out.Bytes(), &res); err != nil {
+		t.Fatal(err)
+	}
+	if res.Omitted["unparsed"] != 2 || len(res.Errors) != 1 || res.Errors[0].Kind != "engine_format" ||
+		!strings.HasPrefix(res.Errors[0].Hint, "2 of ") || !strings.Contains(res.Errors[0].Hint, "renamed.json") {
+		t.Errorf("omitted = %v, errors = %+v", res.Omitted, res.Errors)
+	}
+	if _, errs := replay(t); strings.Contains(errs, "engine_format") || strings.Contains(out.String(), "engine_version") {
+		t.Error("unexpected engine error")
+	}
+}

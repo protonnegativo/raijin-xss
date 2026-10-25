@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"os/exec"
 	"os/signal"
 	"strings"
 
@@ -128,13 +129,14 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	}
 
 	var pocs []dalfox.PoC
+	var parsed dalfox.Format
 	if *input != "" {
 		f, err := os.Open(*input)
 		if err != nil {
 			fmt.Fprintln(stderr, "raijin-xss:", err)
 			return 1
 		}
-		pocs, err = dalfox.Parse(f)
+		pocs, parsed, err = dalfox.ParseFormat(f)
 		f.Close()
 		if err != nil {
 			fmt.Fprintln(stderr, "raijin-xss:", err)
@@ -162,8 +164,13 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 
 		ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 		defer stop()
+		if path, err := exec.LookPath(*bin); err == nil {
+			if hint := dalfox.CheckVersion(ctx, path); hint != "" {
+				res.Errors = append(res.Errors, schema.Error{Kind: "engine_version", Hint: hint})
+			}
+		}
 		var stderrTail string
-		pocs, stderrTail, err = dalfox.Run(ctx, inScope, dalfox.Options{
+		pocs, parsed, stderrTail, err = dalfox.Run(ctx, inScope, dalfox.Options{
 			Binary: *bin, Workers: *workers, Delay: *delay, Timeout: *timeout, Params: params,
 			Headless: *headless, Mining: *mining, BAV: *bav, Extra: fs.Args(), RawPath: *rawPath,
 		})
@@ -184,6 +191,14 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 			}
 			res.Errors = append(res.Errors, schema.Error{Kind: "engine_error", Hint: hint})
 		}
+	}
+
+	if parsed.Bad > 0 {
+		// results the reducer cannot use are not in findings: count them, and say why
+		res.Omitted["unparsed"] += parsed.Bad
+		res.Errors = append(res.Errors, schema.Error{Kind: "engine_format", Hint: fmt.Sprintf(
+			"%d of %d dalfox results had no type and data; the engine's output format may have changed. Read %s for the full output",
+			parsed.Bad, parsed.Results, res.Raw+*input)})
 	}
 
 	opt := reduce.Defaults()

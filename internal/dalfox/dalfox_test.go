@@ -46,3 +46,16 @@ func TestArgsNeverReachOut(t *testing.T) {
 		t.Errorf("args = %s", off)
 	}
 }
+
+// A dalfox that renamed "type" to "kind" gives results the reducer cannot use; they are counted.
+func TestParseFormatRenamedField(t *testing.T) {
+	in := "[\n{\"kind\":\"V\",\"data\":\"http://a/1\",\"param\":\"q\"},\n{\"type\":\"R\",\"data\":\"http://a/2\",\"param\":\"q\"},\nnot json\n{}]"
+	pocs, f, err := ParseFormat(strings.NewReader(in))
+	if err != nil || len(pocs) != 1 || f.Results != 3 || f.Bad != 2 {
+		t.Errorf("pocs = %+v, format = %+v, err = %v", pocs, f, err)
+	}
+	pocs, f, _ = ParseFormat(strings.NewReader(`[{"type":"V","data":"http://a/1"},{}]`))
+	if len(pocs) != 1 || f.Bad != 0 || f.Results != 1 {
+		t.Errorf("pocs = %+v, format = %+v", pocs, f)
+	}
+}
