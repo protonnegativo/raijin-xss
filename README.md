@@ -43,6 +43,7 @@ You also need `dalfox` on `PATH`, or pass `--dalfox <path>`. Chrome is optional:
 ## Usage
 
 ```bash
+raijin-xss --scope scope.txt                                   # test every host the scope names
 raijin-xss --scope scope.txt -u 'https://app.example.com/search?q=test'
 raijin-xss --scope scope.txt -l urls-with-params.txt
 cat urls.txt | raijin-xss --scope scope.txt -l -                 # targets from a pipe
@@ -60,6 +61,8 @@ example.com
 10.0.0.0/24
 !admin.example.com
 ```
+
+With no `-u`, `-l` or `--input`, raijin-xss tests what the scope names: every domain, every IP, and every address of ranges up to a /24, minus exclusions. dalfox needs URLs, so each host is tested as `https://<host>/` and parameter mining finds what it can from there; `next` then suggests `raijin-crawl` or `raijin-params` to find URLs with parameters. A wildcard names no host and a larger range is too big to sweep blindly, so for each one `next` gives the command that enumerates it first (`raijin-subs` or `raijin-ports`).
 
 Targets outside the scope are dropped before dalfox runs, and PoCs outside the scope are dropped from the output. Both are counted in `omitted.out_of_scope`.
 
@@ -175,7 +178,7 @@ The Raijin banner is **off by default**, so normal runs stay small. `--banner` p
 | Flag | Default | |
 |---|---|---|
 | `--scope` | (required) | scope file |
-| `-u` / `-l` / `--input` | | one target URL (repeatable) / target file, `-` for stdin / existing dalfox JSON |
+| `-u` / `-l` / `--input` | every host the scope names, as `https://<host>/` | one target URL (repeatable) / target file, `-` for stdin / existing dalfox JSON |
 | `-p` | | only test this parameter (repeatable, dalfox `-p`) |
 | `--workers` | 10 | concurrent workers (dalfox `-w`) |
 | `--delay`, `--timeout` | | dalfox `--delay` (ms between requests to a host) / `--timeout` (s) |

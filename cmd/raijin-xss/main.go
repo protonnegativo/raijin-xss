@@ -36,7 +36,7 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	fs := flag.NewFlagSet("raijin-xss", flag.ContinueOnError)
 	fs.SetOutput(stderr)
 	var targets, params multi
-	fs.Var(&targets, "u", "target URL with its parameters (repeatable)")
+	fs.Var(&targets, "u", "target URL with its parameters (repeatable; default: every host the scope names, as https://<host>/)")
 	list := fs.String("l", "", "file with one target URL per line (- reads stdin)")
 	scopeFile := fs.String("scope", "", "scope file (required): domains, *.wildcards, IPs, CIDRs, !exclusions")
 	fs.Var(&params, "p", "only test this parameter (repeatable, dalfox -p)")
@@ -57,7 +57,7 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	showVersion := fs.Bool("version", false, "print the version")
 	showBanner := fs.Bool("banner", false, "print the Raijin banner to stderr (off by default to keep output small)")
 	fs.Usage = func() {
-		fmt.Fprintf(stderr, "usage: raijin-xss --scope scope.txt (-u url | -l urls.txt | --input dalfox.json) [flags] [-- extra dalfox args]\n\n")
+		fmt.Fprintf(stderr, "usage: raijin-xss --scope scope.txt [-u url | -l urls.txt | --input dalfox.json] [flags] [-- extra dalfox args]\n\nWith no targets it tests every host the scope names (as https://<host>/).\n\n")
 		fs.PrintDefaults()
 	}
 	if err := fs.Parse(args); err != nil {
@@ -99,7 +99,33 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		}
 		targets = append(targets, lines...)
 	}
-	inScope := filter(targets, sc, res.Omitted)
+	var inScope []string
+	if len(targets) == 0 && *input == "" {
+		// no targets given: test what the scope names. dalfox needs URLs, so each host becomes
+		// https://<host>/ and parameter mining finds what it can from there.
+		hosts, wildcards, ranges := sc.Targets()
+		for _, h := range hosts {
+			if strings.Contains(h, ":") {
+				h = "[" + h + "]"
+			}
+			inScope = append(inScope, "https://"+h+"/")
+		}
+		for _, w := range wildcards {
+			res.Next = append(res.Next, "raijin-subs --scope "+*scopeFile+" -d "+strings.TrimPrefix(w, "*.")+", then raijin-xss -l <urls> to cover "+w)
+		}
+		for _, r := range ranges {
+			res.Next = append(res.Next, "raijin-ports --scope "+*scopeFile+" -host "+r+", then raijin-xss -l <urls> to cover "+r)
+		}
+		if len(inScope) == 0 {
+			res.Summary = "the scope names no single host to scan"
+			res.Target = *scopeFile
+			write(stdout, &res, *format, *pretty)
+			return 1
+		}
+		res.Next = append(res.Next, "raijin-crawl or raijin-params --scope "+*scopeFile+" to find URLs with parameters, then raijin-xss -l <urls>")
+	} else {
+		inScope = filter(targets, sc, res.Omitted)
+	}
 
 	var pocs []dalfox.PoC
 	if *input != "" {
