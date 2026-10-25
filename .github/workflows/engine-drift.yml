@@ -12,7 +12,6 @@ on:
 permissions:
   contents: write
   issues: write
-  pull-requests: write
 
 jobs:
   drift:
@@ -61,6 +60,28 @@ jobs:
             ${{ runner.temp }}/bench.log
             bench/fixtures
           retention-days: 14
+      - name: Commit the bump and release
+        env:
+          INSTALLED: ${{ steps.versions.outputs.installed }}
+          TESTED: ${{ steps.versions.outputs.tested }}
+        run: |
+          newest=$(printf '%s\n%s\n' "$TESTED" "$INSTALLED" | sort -V | tail -1)
+          if [ -z "$INSTALLED" ] || [ "$INSTALLED" = "$TESTED" ] || [ "$newest" != "$INSTALLED" ]; then
+            echo "dalfox $INSTALLED is not newer than the tested $TESTED; nothing to bump"
+            exit 0
+          fi
+          # only engines.json: the refreshed fixtures are in the live-bench artifact, not in the commit
+          git checkout -- bench/fixtures
+          jq --arg v "$INSTALLED" '.dalfox.version = $v' engines.json > engines.json.new
+          mv engines.json.new engines.json
+          go test ./...
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add engines.json
+          git commit -m "Test with dalfox $INSTALLED"
+          git push origin HEAD:${{ github.event.repository.default_branch }}
+          # a push made with GITHUB_TOKEN does not trigger release.yml, so tag here
+          .github/release.sh patch
       - name: Open or update the drift issue
         if: failure()
         env:
@@ -68,7 +89,7 @@ jobs:
         run: |
           gh label create engine-drift --color B60205 --description "An engine update broke raijin-xss" 2>/dev/null || true
           {
-            echo "The live benchmark failed with dalfox $INSTALLED (tested: $(jq -r .dalfox.version engines.json))."
+            echo "The live benchmark or go test failed with dalfox $INSTALLED (tested: $(jq -r .dalfox.version engines.json))."
             echo
             echo '```'
             cat "$RUNNER_TEMP/verify.txt" 2>/dev/null || echo "no verify output; see the run log"
@@ -82,40 +103,10 @@ jobs:
           else
             gh issue create --title "Engine drift: dalfox $INSTALLED" --label engine-drift --body-file "$RUNNER_TEMP/issue.md"
           fi
-      - name: Open or update the version bump PR
+      - name: Close the drift issue
         env:
           INSTALLED: ${{ steps.versions.outputs.installed }}
-          TESTED: ${{ steps.versions.outputs.tested }}
         run: |
-          newest=$(printf '%s\n%s\n' "$TESTED" "$INSTALLED" | sort -V | tail -1)
-          if [ -z "$INSTALLED" ] || [ "$INSTALLED" = "$TESTED" ] || [ "$newest" != "$INSTALLED" ]; then
-            echo "dalfox $INSTALLED is not newer than the tested $TESTED; nothing to bump"
-            exit 0
-          fi
-          branch=engine-bump/dalfox-$INSTALLED
-          # only engines.json: the refreshed fixtures are in the live-bench artifact, not in the PR
-          git checkout -- bench/fixtures
-          jq --arg v "$INSTALLED" '.dalfox.version = $v' engines.json > engines.json.new
-          mv engines.json.new engines.json
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -B "$branch"
-          git add engines.json
-          git commit -m "Test with dalfox $INSTALLED"
-          git push -f origin "$branch"
-          {
-            echo "dalfox $TESTED -> $INSTALLED"
-            echo
-            echo "The live benchmark passed with dalfox $INSTALLED:"
-            echo
-            echo '```'
-            cat "$RUNNER_TEMP/verify.txt"
-            echo '```'
-            echo
-            echo "The refreshed fixtures are in the live-bench artifact of $RUN_URL; the committed fixtures and BENCHMARK.md are unchanged."
-          } > "$RUNNER_TEMP/pr.md"
-          if gh pr view "$branch" --json state --jq .state 2>/dev/null | grep -q OPEN; then
-            gh pr edit "$branch" --title "Test with dalfox $INSTALLED" --body-file "$RUNNER_TEMP/pr.md"
-          else
-            gh pr create --head "$branch" --title "Test with dalfox $INSTALLED" --body-file "$RUNNER_TEMP/pr.md"
-          fi
+          for n in $(gh issue list --label engine-drift --state open --json number --jq '.[].number'); do
+            gh issue close "$n" --comment "Passes with dalfox $INSTALLED: $RUN_URL"
+          done

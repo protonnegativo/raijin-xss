@@ -38,7 +38,13 @@ raijin-xss reads **17.6×** fewer tokens than `dalfox --format json` on the nois
 go install github.com/protonnegativo/raijin-xss/cmd/raijin-xss@latest
 ```
 
+`@latest` installs the latest release.
+
 You also need `dalfox` on `PATH`, or pass `--dalfox <path>`. Chrome is optional: dalfox uses it to verify payloads in JS and DOM XSS (`--headless=false` skips it).
+
+### Versions
+
+Releases are tagged automatically on every change and every passing engine update. `raijin-xss --version` shows the release and the tested engine versions, e.g. `raijin-xss v0.1.0 (tested with dalfox 2.13.0)`. `raijin-mcp update` updates every Raijin tool at once.
 
 ## Usage
 
@@ -196,7 +202,7 @@ The Raijin banner is **off by default**, so normal runs stay small. `--banner` p
 
 ## Engine versions
 
-The tested dalfox version is in `engines.json` (embedded in the binary). raijin-xss warns in `errors` when the installed dalfox is older or of another major version (`engine_version`, from `dalfox version`) and when its output lacks the fields raijin-xss reads, `type` and `data` (`engine_format`; those results are counted in `omitted.unparsed`). Neither changes the exit code. A weekly GitHub Actions job runs the live benchmark with the latest dalfox and opens a PR to bump `engines.json` when it passes, or an `engine-drift` issue when it breaks.
+The tested dalfox version is in `engines.json` (embedded in the binary). raijin-xss warns in `errors` when the installed dalfox is older or of another major version (`engine_version`, from `dalfox version`) and when its output lacks the fields raijin-xss reads, `type` and `data` (`engine_format`; those results are counted in `omitted.unparsed`). Neither changes the exit code. A weekly GitHub Actions job runs the live benchmark with the latest dalfox and, when it passes with a newer dalfox, commits the bump to `engines.json` and tags a release, or an `engine-drift` issue when it breaks.
 
 ## Development
 
