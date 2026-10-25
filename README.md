@@ -194,6 +194,10 @@ The Raijin banner is **off by default**, so normal runs stay small. `--banner` p
 | `--dalfox` | dalfox | path to the binary |
 | `--banner` | false | print the banner to stderr |
 
+## Engine versions
+
+The tested dalfox version is in `engines.json` (embedded in the binary). raijin-xss warns in `errors` when the installed dalfox is older or of another major version (`engine_version`, from `dalfox version`) and when its output lacks the fields raijin-xss reads, `type` and `data` (`engine_format`; those results are counted in `omitted.unparsed`). Neither changes the exit code. A weekly GitHub Actions job runs the live benchmark with the latest dalfox and opens a PR to bump `engines.json` when it passes, or an `engine-drift` issue when it breaks.
+
 ## Development
 
 ```bash
