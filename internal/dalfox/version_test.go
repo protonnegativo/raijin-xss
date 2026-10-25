@@ -1,7 +1,12 @@
 package dalfox
 
 import (
+	"context"
+	"fmt"
+	"os"
+	"path/filepath"
 	"reflect"
+	"strings"
 	"testing"
 )
 
@@ -37,5 +42,26 @@ func TestUntested(t *testing.T) {
 		if got := Untested(c.v, tested); got != c.want {
 			t.Errorf("Untested(%v) = %v, want %v", c.v, got, c.want)
 		}
+	}
+}
+
+// The fake dalfox answers "version" with a version derived from engines.json, so a bump does not break this.
+func TestCheckVersionHint(t *testing.T) {
+	m, _ := Engines()
+	tested := ParseVersion(m["dalfox"].Version)
+	fake := func(v string) string {
+		p := filepath.Join(t.TempDir(), "dalfox")
+		if err := os.WriteFile(p, []byte("#!/bin/sh\necho v"+v+"\n"), 0o700); err != nil {
+			t.Fatal(err)
+		}
+		return p
+	}
+	if hint := CheckVersion(context.Background(), fake(m["dalfox"].Version)); hint != "" {
+		t.Errorf("tested version warned: %q", hint)
+	}
+	other := fmt.Sprintf("%d.0.0", tested[0]+1)
+	hint := CheckVersion(context.Background(), fake(other))
+	if !strings.Contains(hint, "dalfox "+other) || !strings.HasSuffix(hint, ", or run raijin-mcp update") {
+		t.Errorf("hint = %q", hint)
 	}
 }

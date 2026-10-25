@@ -41,7 +41,7 @@ func TestNoBannerByDefault(t *testing.T) {
 
 func TestBannerGoesToStderrOnly(t *testing.T) {
 	out, errs := replay(t, "--banner")
-	if !strings.Contains(errs, "TGT-LOCK") || !strings.Contains(errs, "raijin-xss v"+version) {
+	if !strings.Contains(errs, "TGT-LOCK") || !strings.Contains(errs, "raijin-xss v"+strings.TrimPrefix(version, "v")) {
 		t.Errorf("banner missing or without the version: %q", errs)
 	}
 	if strings.Contains(out, "TGT-LOCK") {

@@ -22,8 +22,6 @@ import (
 	"github.com/protonnegativo/raijin-xss/internal/state"
 )
 
-const version = "0.1.0"
-
 type multi []string
 
 func (m *multi) String() string     { return strings.Join(*m, ",") }
@@ -65,10 +63,10 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		return 1
 	}
 	if *showBanner {
-		banner.Write(stderr, "raijin-xss", version, useColor(stderr))
+		banner.Write(stderr, "raijin-xss", strings.TrimPrefix(version, "v"), useColor(stderr))
 	}
 	if *showVersion {
-		fmt.Fprintln(stdout, "raijin-xss", version)
+		fmt.Fprintln(stdout, versionLine())
 		return 0
 	}
 	if *scopeFile == "" {
@@ -176,7 +174,7 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		})
 		switch {
 		case errors.Is(err, dalfox.ErrNotFound):
-			res.Errors = append(res.Errors, schema.Error{Kind: "missing_engine", Hint: "install dalfox (go install github.com/hahwul/dalfox/v2@latest) or pass --dalfox <path>"})
+			res.Errors = append(res.Errors, schema.Error{Kind: "missing_engine", Hint: "install dalfox (go install github.com/hahwul/dalfox/v2@latest) or pass --dalfox <path>, or run raijin-mcp update"})
 			res.Summary = "dalfox not found, nothing scanned"
 			res.Raw = ""
 			if tempRaw {

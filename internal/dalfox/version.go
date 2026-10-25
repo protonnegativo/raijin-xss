@@ -88,6 +88,6 @@ func CheckVersion(ctx context.Context, bin string) string {
 	if !Untested(installed, ParseVersion(e.Version)) {
 		return ""
 	}
-	return fmt.Sprintf("dalfox %d.%d.%d is not the tested %s; results may be incomplete. Install the tested version: %s",
+	return fmt.Sprintf("dalfox %d.%d.%d is not the tested %s; results may be incomplete. Install the tested version: %s, or run raijin-mcp update",
 		installed[0], installed[1], installed[2], e.Version, e.Install(e.Version))
 }
