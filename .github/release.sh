@@ -2,7 +2,7 @@
 # Tags HEAD with the next release and creates its GitHub Release.
 # Usage: .github/release.sh [patch|minor|major] [base-commit]
 # With a base commit, it skips when base..HEAD only touched files that do not change the binary.
-# Needs GH_TOKEN and push access; release.yml and the drift job call it.
+# Needs GH_TOKEN with contents and actions write access; release.yml and the drift job call it.
 set -euo pipefail
 
 bump=${1:-patch}
@@ -41,4 +41,6 @@ git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 git tag -a "$next" -m "$next"
 git push origin "$next"
 gh release create "$next" --generate-notes --title "$next"
+# a tag and a Release created with GITHUB_TOKEN start no workflows: build the binaries explicitly
+gh workflow run goreleaser.yml -f tag="$next"
 echo "released $next"
