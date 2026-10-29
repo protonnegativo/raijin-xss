@@ -26,6 +26,15 @@ func TestVersionFrom(t *testing.T) {
 	}
 }
 
+func TestBuildVersionPrefersReleaseVersion(t *testing.T) {
+	old := releaseVersion
+	defer func() { releaseVersion = old }()
+	releaseVersion = "v9.9.9"
+	if got := buildVersion(); got != "v9.9.9" {
+		t.Errorf("buildVersion = %q, want v9.9.9", got)
+	}
+}
+
 func TestVersionLine(t *testing.T) {
 	engines, _ := dalfox.Engines()
 	var out bytes.Buffer

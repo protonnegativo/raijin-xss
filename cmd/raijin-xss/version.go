@@ -8,12 +8,20 @@ import (
 	"github.com/protonnegativo/raijin-xss/internal/dalfox"
 )
 
-// version is the release this binary was installed as, or "dev" for a local build.
+// releaseVersion is set by the release build (-ldflags "-X main.releaseVersion=vX.Y.Z"). It must be a
+// plain string variable: -X is ignored for a variable initialized by a function call.
+var releaseVersion string
+
+// version is the release this binary was built as, or "dev" for a local build.
 var version = buildVersion()
 
-// buildVersion returns the module version from the build info when the binary was installed with
-// go install ...@vX.Y.Z (or @latest), else "dev" with the VCS revision of a local go build.
+// buildVersion returns releaseVersion when the release build set it, else the module version from the
+// build info when the binary was installed with go install ...@vX.Y.Z (or @latest), else "dev" with the
+// VCS revision of a local go build.
 func buildVersion() string {
+	if releaseVersion != "" {
+		return releaseVersion
+	}
 	info, ok := debug.ReadBuildInfo()
 	if !ok {
 		return "dev"
