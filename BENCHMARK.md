@@ -30,8 +30,8 @@ Reproduce: `bench/run.sh` replays the saved scans in `bench/fixtures`. `LIVE=1 b
 | dalfox text (stdout+stderr), separate scan, 124 PoCs | 53,034 | 22,514 | 1.3× |
 | dalfox text, stdout only, separate scan | 17,751 | 9,774 | 3.1× |
 | dalfox text, same PoCs as raw | 17,179 | 9,439 | 3.2× |
-| **raijin-xss JSON (default)** | 3,864 | **1,691** | **17.6×** |
-| raijin-xss `--pretty` | 4,608 | 1,916 | 15.6× |
+| **raijin-xss JSON (default)** | 3,914 | **1,714** | **17.4×** |
+| raijin-xss `--pretty` | 4,662 | 1,942 | 15.4× |
 | raijin-xss `--format table` | 2,226 | 1,113 | 26.8× |
 
 ## Scenario 2: findings
@@ -49,9 +49,9 @@ Reproduce: `bench/run.sh` replays the saved scans in `bench/fixtures`. `LIVE=1 b
 | dalfox text (stdout+stderr), separate scan, 191 PoCs | 69,072 | 32,585 | 0.5× |
 | dalfox text, stdout only, separate scan | 29,707 | 18,142 | 1.0× |
 | dalfox text, same PoCs as raw | 11,413 | 6,493 | 2.7× |
-| **raijin-xss JSON (default)** | 2,394 | **934** | **18.7×** |
-| raijin-xss `--pretty` | 3,044 | 1,150 | 15.2× |
-| raijin-xss `--format table` | 885 | 408 | 43× |
+| **raijin-xss JSON (default)** | 2,444 | **957** | **18.3×** |
+| raijin-xss `--pretty` | 3,098 | 1,176 | 14.9× |
+| raijin-xss `--format table` | 885 | 408 | 42.9× |
 
 In a live run (not a replay) the raijin-xss JSON also has `raw`, the path of dalfox's saved JSON, a few more tokens.
 
@@ -70,9 +70,9 @@ dalfox writes no `payload` or `evidence` for a PoC it verified in headless Chrom
 
 ## Reading the numbers
 
-- **Against `dalfox --format json`**, the structured output an agent would parse, raijin-xss uses **17.6× fewer tokens** on the noisy scan and **18.7× fewer** on the findings scan. Most of it is the payloads dalfox reports at one location: 105 PoCs for the textarea and 79 for the JS string are 4 PoC URLs and 4 counts.
-- **Against dalfox's text output for the same PoCs**, raijin-xss is **5.6×** (9,439 → 1,691) and **7.0×** (6,493 → 934) smaller. The text lines are already lean, one PoC URL each, but there is one line per payload, and they have no parameter name, no payload in readable form, no evidence, no CWE and no grep pattern (a G line is a bare URL).
-- **Against a real text run (stdout and stderr)**, raijin-xss is 13× and 35× smaller, but those are other scans: dalfox reported 124 and 191 PoCs there, against 121 and 83 in the JSON runs.
+- **Against `dalfox --format json`**, the structured output an agent would parse, raijin-xss uses **17.4× fewer tokens** on the noisy scan and **18.3× fewer** on the findings scan. Most of it is the payloads dalfox reports at one location: 105 PoCs for the textarea and 79 for the JS string are 4 PoC URLs and 4 counts.
+- **Against dalfox's text output for the same PoCs**, raijin-xss is **5.5×** (9,439 → 1,714) and **6.8×** (6,493 → 957) smaller. The text lines are already lean, one PoC URL each, but there is one line per payload, and they have no parameter name, no payload in readable form, no evidence, no CWE and no grep pattern (a G line is a bare URL).
+- **Against a real text run (stdout and stderr)**, raijin-xss is 13× and 34× smaller, but those are other scans: dalfox reported 124 and 191 PoCs there, against 121 and 83 in the JSON runs.
 - **The output stays bounded.** On a scan too big for `--max-bytes`, raijin-xss cuts the least important data first: the clean targets, then extra locations of low-ranked findings, then low-ranked findings. Every cut is counted in `omitted`, and `next` points to the raw file. Raw dalfox output has no upper bound.
 
 ## dalfox's payloads change from scan to scan
