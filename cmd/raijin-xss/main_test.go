@@ -234,6 +234,9 @@ func TestInvalidScopeIsStructuredAndScansNothing(t *testing.T) {
 			if err := json.Unmarshal(out.Bytes(), &v); err != nil {
 				t.Fatalf("stdout is not JSON: %v: %s", err, out.String())
 			}
+			if !strings.HasPrefix(out.String(), `{"schema_version":1,`) {
+				t.Errorf("stdout should start with schema_version: %.60s", out.String())
+			}
 			if v.SchemaVersion != 1 || len(v.Errors) == 0 || v.Raw != "" {
 				t.Fatalf("stdout = %s", out.String())
 			}
