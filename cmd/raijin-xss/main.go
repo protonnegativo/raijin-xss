@@ -123,7 +123,7 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 			res.Summary = "the scope names no single host to scan"
 			res.Target = *scopeFile
 			write(stdout, &res, *format, *pretty)
-			return 1
+			return 2
 		}
 		res.Next = append(res.Next, "raijin-crawl or raijin-params --scope "+*scopeFile+" to find URLs with parameters, then raijin-xss -l <urls>")
 	} else {

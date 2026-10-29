@@ -263,3 +263,17 @@ func TestStateMarksNewOnlyOnce(t *testing.T) {
 		t.Errorf("second run should have nothing new: %s", second)
 	}
 }
+
+func TestScopeWithoutHostsExitsTwoWithJSON(t *testing.T) {
+	p := filepath.Join(t.TempDir(), "scope.txt")
+	if err := os.WriteFile(p, []byte("*.example.com\n"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	var out, errb bytes.Buffer
+	if code := run([]string{"--scope", p}, nil, &out, &errb); code != 2 {
+		t.Fatalf("exit %d, want 2", code)
+	}
+	if !strings.HasPrefix(out.String(), `{"schema_version":1,`) || !strings.Contains(out.String(), "names no single host") {
+		t.Errorf("stdout = %s", out.String())
+	}
+}
