@@ -200,3 +200,80 @@ func TestEngineFormatRenamedField(t *testing.T) {
 		t.Error("unexpected engine error")
 	}
 }
+
+func TestSchemaVersionIsTheFirstField(t *testing.T) {
+	out, _ := replay(t)
+	if !strings.HasPrefix(out, `{"schema_version":1,"tool":"raijin-xss"`) {
+		t.Errorf("output should start with schema_version: %.80s", out)
+	}
+}
+
+func TestInvalidScopeIsStructuredAndScansNothing(t *testing.T) {
+	for name, tc := range map[string]struct{ rules, reason string }{
+		"port":      {"example.com:443\n", "port in rule"},
+		"host bits": {"10.0.0.7/24\n", "CIDR has host bits set"},
+		"no rules":  {"# nothing\n", "no include rules"},
+	} {
+		t.Run(name, func(t *testing.T) {
+			p := filepath.Join(t.TempDir(), "scope.txt")
+			if err := os.WriteFile(p, []byte(tc.rules), 0o600); err != nil {
+				t.Fatal(err)
+			}
+			var out, errb bytes.Buffer
+			// a missing engine would exit 2 with another kind: the scope must fail first
+			code := run([]string{"--scope", p, "-u", "https://a.example.com/?q=1", "--dalfox", "/nonexistent/dalfox"}, nil, &out, &errb)
+			if code != 2 {
+				t.Fatalf("exit %d, want 2", code)
+			}
+			var v struct {
+				SchemaVersion int `json:"schema_version"`
+				Summary       string
+				Raw           string
+				Errors        []struct{ Kind, Hint string }
+			}
+			if err := json.Unmarshal(out.Bytes(), &v); err != nil {
+				t.Fatalf("stdout is not JSON: %v: %s", err, out.String())
+			}
+			if !strings.HasPrefix(out.String(), `{"schema_version":1,`) {
+				t.Errorf("stdout should start with schema_version: %.60s", out.String())
+			}
+			if v.SchemaVersion != 1 || len(v.Errors) == 0 || v.Raw != "" {
+				t.Fatalf("stdout = %s", out.String())
+			}
+			for _, e := range v.Errors {
+				if e.Kind != "scope" {
+					t.Errorf("error kind %q, want scope", e.Kind)
+				}
+			}
+			if !strings.Contains(v.Errors[0].Hint, tc.reason) || !strings.Contains(v.Summary, "nothing scanned") {
+				t.Errorf("stdout = %s", out.String())
+			}
+		})
+	}
+}
+
+func TestStateMarksNewOnlyOnce(t *testing.T) {
+	st := filepath.Join(t.TempDir(), "state.json")
+	first, _ := replay(t, "--state", st)
+	second, _ := replay(t, "--state", st)
+	if !strings.Contains(first, `"new":true`) || !strings.Contains(first, ", 5 new") {
+		t.Errorf("first run should mark findings new: %s", first)
+	}
+	if strings.Contains(second, `"new":true`) || !strings.Contains(second, ", 0 new") {
+		t.Errorf("second run should have nothing new: %s", second)
+	}
+}
+
+func TestScopeWithoutHostsExitsTwoWithJSON(t *testing.T) {
+	p := filepath.Join(t.TempDir(), "scope.txt")
+	if err := os.WriteFile(p, []byte("*.example.com\n"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	var out, errb bytes.Buffer
+	if code := run([]string{"--scope", p}, nil, &out, &errb); code != 2 {
+		t.Fatalf("exit %d, want 2", code)
+	}
+	if !strings.HasPrefix(out.String(), `{"schema_version":1,`) || !strings.Contains(out.String(), "names no single host") {
+		t.Errorf("stdout = %s", out.String())
+	}
+}

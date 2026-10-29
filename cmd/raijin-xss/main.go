@@ -14,12 +14,12 @@ import (
 	"os/signal"
 	"strings"
 
+	"github.com/protonnegativo/raijin-core/scope"
+	"github.com/protonnegativo/raijin-core/state"
 	"github.com/protonnegativo/raijin-xss/internal/banner"
 	"github.com/protonnegativo/raijin-xss/internal/dalfox"
 	"github.com/protonnegativo/raijin-xss/internal/reduce"
 	"github.com/protonnegativo/raijin-xss/internal/schema"
-	"github.com/protonnegativo/raijin-xss/internal/scope"
-	"github.com/protonnegativo/raijin-xss/internal/state"
 )
 
 type multi []string
@@ -56,7 +56,7 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	showVersion := fs.Bool("version", false, "print the version")
 	showBanner := fs.Bool("banner", false, "print the Raijin banner to stderr (off by default to keep output small)")
 	fs.Usage = func() {
-		fmt.Fprintf(stderr, "usage: raijin-xss --scope scope.txt [-u url | -l urls.txt | --input dalfox.json] [flags] [-- extra dalfox args]\n\nWith no targets it tests every host the scope names (as https://<host>/).\n\n")
+		fmt.Fprintf(stderr, "usage: raijin-xss --scope scope.txt [-u url | -l urls.txt | --input dalfox.json] [flags] [-- extra dalfox args]\n\nWith no targets it tests every host the scope names (as https://<host>/).\n\nExit codes: 0 ok; 2 structured error (invalid scope, missing engine) with JSON on stdout; 1 wrong usage.\n\n")
 		fs.PrintDefaults()
 	}
 	if err := fs.Parse(args); err != nil {
@@ -73,12 +73,6 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		fmt.Fprintln(stderr, "raijin-xss: --scope is required")
 		return 1
 	}
-	sc, err := scope.Load(*scopeFile)
-	if err != nil {
-		fmt.Fprintln(stderr, "raijin-xss: scope:", err)
-		return 1
-	}
-
 	res := schema.Result{
 		Tool:     "raijin-xss",
 		Version:  version,
@@ -88,6 +82,16 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		Errors:   []schema.Error{},
 		Next:     []string{},
 		Budget:   schema.Budget{MaxItems: *maxItems, MaxBytes: *maxBytes},
+	}
+
+	sc, err := scope.Load(*scopeFile)
+	if err != nil {
+		// an invalid scope is an error the caller can fix: say which lines, and run nothing
+		res.Target = *scopeFile
+		res.Errors = append(res.Errors, scope.SchemaErrors(err)...)
+		res.Summary = "invalid scope file, nothing scanned"
+		write(stdout, &res, *format, *pretty)
+		return 2
 	}
 
 	if *list != "" {
@@ -119,7 +123,7 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 			res.Summary = "the scope names no single host to scan"
 			res.Target = *scopeFile
 			write(stdout, &res, *format, *pretty)
-			return 1
+			return 2
 		}
 		res.Next = append(res.Next, "raijin-crawl or raijin-params --scope "+*scopeFile+" to find URLs with parameters, then raijin-xss -l <urls>")
 	} else {
@@ -216,7 +220,9 @@ func run(args []string, stdin io.Reader, stdout, stderr io.Writer) int {
 		if err != nil {
 			res.Errors = append(res.Errors, schema.Error{Kind: "state_error", Hint: err.Error()})
 		} else {
-			newCount = st.Mark(res.Findings, out.Locations)
+			newCount = state.Mark(st, res.Findings, out.Locations,
+				func(f *schema.Finding) string { return f.Fingerprint },
+				func(f *schema.Finding) { f.New = true })
 			if err := st.Save(*statePath); err != nil {
 				res.Errors = append(res.Errors, schema.Error{Kind: "state_error", Hint: err.Error()})
 			}
