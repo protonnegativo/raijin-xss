@@ -1,5 +1,11 @@
 # ⚡ Raijin XSS
 
+[![CI](https://github.com/protonnegativo/raijin-xss/actions/workflows/ci.yml/badge.svg)](https://github.com/protonnegativo/raijin-xss/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/protonnegativo/raijin-xss)](https://github.com/protonnegativo/raijin-xss/releases/latest)
+[![License: MIT](https://img.shields.io/github/license/protonnegativo/raijin-xss)](LICENSE)
+[![Go Reference](https://pkg.go.dev/badge/github.com/protonnegativo/raijin-xss.svg)](https://pkg.go.dev/github.com/protonnegativo/raijin-xss)
+[![Go Report Card](https://goreportcard.com/badge/github.com/protonnegativo/raijin-xss)](https://goreportcard.com/report/github.com/protonnegativo/raijin-xss)
+
 **dalfox for AI agents: confirmed reflections with the payload and the context it landed in, one entry per parameter and context, verified first.**
 
 `raijin-xss` is a tool of **Raijin**, an arsenal of offensive security tools built for AI agents. It runs [dalfox](https://github.com/hahwul/dalfox) underneath and returns the **Raijin Schema**: one compact JSON where every PoC dalfox reported is a ranked finding, the same parameter and injection context on many URLs is one entry that lists every URL with its payload, the dozens of payloads dalfox reflects at one place are one location and a count, and anything it had to cut is counted.
