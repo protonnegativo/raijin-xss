@@ -1,6 +1,6 @@
 {
   "dalfox": {
-    "version": "2.13.0",
+    "version": "2.13.1",
     "go": "github.com/hahwul/dalfox/v2"
   }
 }
